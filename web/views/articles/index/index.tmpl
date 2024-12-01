@@ -1,0 +1,11 @@
+{{define "articles-content"}}
+<h1>Articles</h1>
+
+<ul>
+    {{range .Articles}}
+    <li>
+        <a href="/articles/{{.Slug}}">{{.Title}}</a>
+    </li>
+    {{end}}
+</ul>
+{{end}}

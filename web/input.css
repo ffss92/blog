@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .article {
+        h2 {
+            @apply text-3xl font-bold font-heading;
+        }
+
+        pre {
+            @apply p-4 rounded-md shadow-sm text-sm;
+        }
+    }
+}
+
+@layer base {
+    body {
+        @apply text-stone-900 bg-stone-50;
+    }
+}
+
+@layer base {
+    @font-face {
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: 300 800;
+        src: url('/static/fonts/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+    }
+    
+    @font-face {
+        font-family: 'Open Sans';
+        font-style: italic;
+        font-weight: 300 800;
+        src: url('/static/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+    }
+    
+    @font-face {
+        font-family: 'Raleway';
+        font-style: normal;
+        font-weight: 100 900;
+        src: url('/static/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+    }
+    
+    @font-face {
+        font-family: 'Raleway';
+        font-style: italic;
+        font-weight: 100 900;
+        src: url('/static/fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+    }
+    
+    @font-face {
+        font-family: 'JetBrainsMono';
+        font-style: normal;
+        font-weight: 100 800;
+        src: url('/static/fonts/JetBrainsMono-VariableFont_wght.ttf') format('truetype');
+    }
+    
+    @font-face {
+        font-family: 'JetBrainsMono';
+        font-style: italic;
+        font-weight: 100 800;
+        src: url('/static/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf') format('truetype');
+    }    
+}

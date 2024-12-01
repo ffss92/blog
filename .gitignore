@@ -1,0 +1,13 @@
+bin
+node_modules
+.vscode
+.idea
+.DS_Store
+
+*.db
+*.db-shm
+*.db-wal
+
+.env
+.env.*
+!.env.example
