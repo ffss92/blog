@@ -13,6 +13,7 @@ CREATE UNIQUE INDEX "idx_authors_handle" ON "authors"("handle");
 CREATE VIRTUAL TABLE "blog_posts_fts" USING fts5 (
     "slug",
     "title",
+    "subtitle",
     "content",
     tokenize = 'porter'
 );

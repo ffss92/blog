@@ -1,0 +1,13 @@
+{
+  "name": "blog",
+  "private": true,
+  "scripts": {
+    "tw:watch": "tailwindcss -i web/input.css -o web/static/css/style.css --minify --watch"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.15"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15"
+  }
+}

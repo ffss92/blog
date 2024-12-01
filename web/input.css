@@ -4,13 +4,7 @@
 
 @layer components {
     .article {
-        h2 {
-            @apply text-3xl font-bold font-heading;
-        }
-
-        pre {
-            @apply p-4 rounded-md shadow-sm text-sm;
-        }
+        @apply prose prose-headings:font-heading prose-code:text-sm prose-pre:shadow-sm;
     }
 }
 

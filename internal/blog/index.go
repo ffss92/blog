@@ -31,8 +31,8 @@ func indexContents(db *sql.DB, articles map[string]*Article) error {
 	}
 
 	for _, article := range articles {
-		args := []any{article.Slug, article.Title, article.Content}
-		_, err = tx.Exec("INSERT INTO blog_posts_fts (slug, title, content) VALUES ($1, $2, $3)", args...)
+		args := []any{article.Slug, article.Title, article.Subtitle, article.Content}
+		_, err = tx.Exec("INSERT INTO blog_posts_fts (slug, title, subtitle, content) VALUES ($1, $2, $3, $4)", args...)
 		if err != nil {
 			return err
 		}

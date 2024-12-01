@@ -11,11 +11,12 @@ var (
 )
 
 type ArticleMetadata struct {
-	Title  string   `yaml:"title"`
-	Author string   `yaml:"author"`
-	Draft  bool     `yaml:"draft"`
-	Date   string   `yaml:"date"`
-	Tags   []string `yaml:"tags"`
+	Title    string   `yaml:"title"`
+	Subtitle string   `yaml:"subtitle"`
+	Author   string   `yaml:"author"`
+	Draft    bool     `yaml:"draft"`
+	Date     string   `yaml:"date"`
+	Tags     []string `yaml:"tags"`
 }
 
 type Article struct {

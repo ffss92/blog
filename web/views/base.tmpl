@@ -11,5 +11,13 @@
     {{template "header" .}}
     {{template "content" .}}
     {{block "post-content" .}}{{end}}
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons({
+        icons: {
+            Calendar: lucide.Calendar,
+        }
+      });
+    </script>
 </body>
 </html>

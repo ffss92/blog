@@ -1,6 +1,8 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
 type homePage struct {
 	basePage
@@ -8,8 +10,6 @@ type homePage struct {
 
 func (app *application) handleHome() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		app.render(w, r, "home", homePage{
-			basePage: app.newBasePage(r, "Home"),
-		})
+		http.Redirect(w, r, "/articles", http.StatusFound)
 	}
 }

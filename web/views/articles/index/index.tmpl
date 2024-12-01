@@ -1,11 +1,25 @@
 {{define "articles-content"}}
-<h1>Articles</h1>
+<section class="space-y-4">
+    <h1 class="text-4xl font-bold">Articles</h1>
 
-<ul>
-    {{range .Articles}}
-    <li>
-        <a href="/articles/{{.Slug}}">{{.Title}}</a>
-    </li>
-    {{end}}
-</ul>
+    <ul class="max-w-xl">
+        {{range .Articles}}
+        <li>
+            <a class="text-lg space-y-2" href="/articles/{{.Slug}}">
+                <div>
+                    <p class="font-semibold">{{.Title}}</p>
+                    <div class="flex gap-1">
+                        {{range .Tags}}
+                        <span class="text-xs">#{{.}}</span>
+                        {{end}}
+                    </div>
+                </div>
+                <p class="text-sm text-stone-700">
+                    {{.Subtitle}}
+                </p>
+            </a>
+        </li>
+        {{end}}
+    </ul>
+</section>
 {{end}}
