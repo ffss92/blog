@@ -66,6 +66,8 @@ func maxLength(value string, n int) bool {
 Finally, putting it all together, a HTTP request validation would look something like this:
 
 ```go
+package handler 
+
 type routeRequest struct { 
     Name string `json:"name"`
     Email string `json:"email"`
@@ -180,6 +182,9 @@ quite simple, as it ended up being a very small API, it consists of defining rul
 I started by defining a `Rule` interface:
 
 ```go
+// Package rules define a framework for building validation packages.
+package rules
+
 type Rule[T any] interface {
     // Apply returns whether value is valid, and the reason if it is not.
     Apply(ctx context.Context, value T) (bool, string)
@@ -205,14 +210,16 @@ func (r RuleFunc[T]) Apply(ctx context.Context, value T) (bool, string) {
 This means we could easily create a rule with your previously defined funcs like this: 
 
 ```go
+// Package comp defines funcions for cheking if a value meet certain criteria.
 package comp
 
 func NotBlank(value string) bool {
     return utf8.RuneCountInString(value) > 0
 }
+```
 
-// ---------
-
+```go
+// Package validator defines rules for validation.
 package validator
 
 func NotBlank() RuleFunc[string] {
@@ -225,6 +232,8 @@ func NotBlank() RuleFunc[string] {
 You could also use the context to generate different reason message, etc. Here's a very simple example:
 
 ```go
+package validator 
+
 func NotBlank() RuleFunc[string] {
     return func(ctx context.Context, value string) (bool, string) {
         var reason string
@@ -333,6 +342,8 @@ func GreaterThan[T cmp.Ordered](target T) rules.RuleFunc[T] {
 Now, we can bring this all together. Out validation process will look like this:
 
 ```go
+package handler 
+
 type routeRequest struct { 
     Name string `json:"name"`
     Email string `json:"email"`
@@ -361,6 +372,8 @@ func handleRoute(w http.ResponseWriter, r *http.Request) {
 From this:
 
 ```go
+package handler 
+
 type routeRequest struct { 
     Name string `json:"name"`
     Email string `json:"email"`
