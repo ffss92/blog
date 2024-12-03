@@ -30,6 +30,7 @@ func (app *application) handleArticleIndex() http.HandlerFunc {
 type articleShowPage struct {
 	basePage
 	Article *blog.Article
+	Author  *blog.Author
 }
 
 func (app *application) handleArticleShow() http.HandlerFunc {
@@ -45,9 +46,22 @@ func (app *application) handleArticleShow() http.HandlerFunc {
 			}
 			return
 		}
+
+		author, err := app.blog.GetAuthor(r.Context(), article.Author)
+		if err != nil {
+			switch {
+			case errors.Is(err, blog.ErrAuthorNotFound):
+				http.NotFound(w, r)
+			default:
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+			return
+		}
+
 		app.render(w, r, "articles/show", articleShowPage{
 			basePage: app.newBasePage(r, article.Title),
 			Article:  article,
+			Author:   author,
 		})
 	}
 }

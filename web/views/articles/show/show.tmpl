@@ -5,7 +5,17 @@
     <h1 class="text-3xl md:text-5xl font-bold font-heading">
         {{.Article.Title}}
     </h1>
-    
+
+    <a href="/authors/{{.Author.Handle}}" class="text-sm flex items-center gap-2 w-fit">
+        <img class="size-10 rounded-full" src="{{.Author.ImageURL}}" alt="{{.Author.Name}}'s picture"> 
+        <div>
+            <div class="font-bold">{{.Author.Name}}</div>
+            <div class="flex items-center gap-2">
+                <i class="size-4" data-lucide="calendar"></i> {{.Article.Date}}
+            </div>
+        </div>
+    </a>
+
     <ul class="flex gap-2">
         {{range .Article.Tags}}
         <li class="text-xs font-medium underline">#{{.}}</li>

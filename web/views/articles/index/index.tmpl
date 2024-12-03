@@ -6,8 +6,9 @@
         {{range .Articles}}
         <li>
             <a class="text-lg space-y-2" href="/articles/{{.Slug}}">
-                <div>
+                <div class="space-y-1">
                     <p class="font-semibold">{{.Title}}</p>
+                    <p class="text-sm">{{.Date}}</p>
                     <div class="flex gap-1">
                         {{range .Tags}}
                         <span class="text-xs">#{{.}}</span>

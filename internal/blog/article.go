@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"html/template"
+	"slices"
+	"strings"
 )
 
 var (
@@ -69,5 +71,10 @@ func (s *Service) listArticles() ([]*Article, error) {
 		}
 		articles = append(articles, article)
 	}
+
+	slices.SortFunc(articles, func(a *Article, b *Article) int {
+		return -strings.Compare(a.Date, b.Date)
+	})
+
 	return articles, nil
 }
