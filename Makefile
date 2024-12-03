@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	go build -o bin/server cmd/server/*.go
+	@go build -o bin/server cmd/server/*.go
 
 .PHONY: run
 run: build

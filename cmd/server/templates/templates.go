@@ -11,6 +11,7 @@ func Parse(views fs.FS) (map[string]*template.Template, error) {
 		{"home"},
 		{"articles/index", "articles"},
 		{"articles/show", "articles"},
+		{"authors/show", "authors"},
 	}
 
 	cache := make(map[string]*template.Template)

@@ -16,6 +16,11 @@ func (app *application) routes() http.Handler {
 		r.Get("/", app.handleHome())
 		r.Get("/articles", app.handleArticleIndex())
 		r.Get("/articles/{slug}", app.handleArticleShow())
+		r.Get("/authors/{handle}", app.handleAuthorShow())
+	})
+
+	r.Route("/api", func(r chi.Router) {
+		r.Get("/search", app.handleSearch())
 	})
 
 	return r

@@ -64,7 +64,7 @@ func (s *Service) listArticles() ([]*Article, error) {
 	}
 	articles := make([]*Article, 0)
 	for _, article := range s.cache {
-		if s.dev && article.Draft {
+		if !s.dev && article.Draft {
 			continue
 		}
 		articles = append(articles, article)

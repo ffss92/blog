@@ -46,23 +46,23 @@ func New(dev bool, db *sql.DB, articles fs.FS) (*Service, error) {
 		),
 	)
 
-	cache, err := parseArticles(md, articles)
-	if err != nil {
-		return nil, err
-	}
-	if err := indexContents(db, cache); err != nil {
-		return nil, err
-	}
-
-	return &Service{
+	service := &Service{
 		dev:      dev,
 		db:       db,
 		md:       md,
 		articles: articles,
+	}
+	cache, err := service.parseArticles(md, articles)
+	if err != nil {
+		return nil, err
+	}
+	service.cache = cache
 
-		mu:    sync.Mutex{},
-		cache: cache,
-	}, nil
+	if err := service.indexContents(); err != nil {
+		return nil, err
+	}
+
+	return service, nil
 }
 
 // Collects all markdown files (.md) from a [fs.FS].
@@ -80,7 +80,7 @@ func markdownFiles(articles fs.FS) ([]string, error) {
 	return paths, err
 }
 
-func parseArticles(md goldmark.Markdown, articles fs.FS) (map[string]*Article, error) {
+func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[string]*Article, error) {
 	paths, err := markdownFiles(articles)
 	if err != nil {
 		return nil, err
@@ -135,7 +135,7 @@ func (s *Service) refreshArticles() error {
 	if s.dev {
 		s.mu.Lock()
 		defer s.mu.Unlock()
-		cache, err := parseArticles(s.md, s.articles)
+		cache, err := s.parseArticles(s.md, s.articles)
 		if err != nil {
 			return fmt.Errorf("failed to refresh articles from fs: %w", err)
 		}

@@ -1,14 +1,14 @@
 ---
 title: Leveraging Go generics for input validation
 subtitle: |
-    Go's generics may not be as extensive as those in other languages, but they still offer powerful capabilities. 
-    In this article, I'll demonstrate how I utilize generics to simplify and enhance validation in my projects.
+  Go's generics may not be as extensive as those in other languages, but they still offer powerful capabilities. 
+  In this article, I'll demonstrate how I utilize generics to simplify and enhance validation in my projects.
 author: "@ffss"
 draft: false
 date: "2024-12-01"
 tags:
-    - Go
-    - Generics
+  - Go
+  - Generics
 ---
 
 ## A simple, but effective, pattern.
@@ -66,9 +66,9 @@ func maxLength(value string, n int) bool {
 Finally, putting it all together, a HTTP request validation would look something like this:
 
 ```go
-package handler 
+package handler
 
-type routeRequest struct { 
+type routeRequest struct {
     Name string `json:"name"`
     Email string `json:"email"`
     validator // embed validator struct, if it is public set `json:"-"`
@@ -135,7 +135,7 @@ func (v *validator) check(name, value string, checkers ...func(string) (bool, st
 ```
 
 This works great! Except it works for `string`'s only... What if we need to validate an `int` value, and
-an `int32` and `int64` maybe? Don't forget about all of those `uint`'s and `float`'s too. 
+an `int32` and `int64` maybe? Don't forget about all of those `uint`'s and `float`'s too.
 
 Normally, we would just slap a generic on this method, but since we can't have generics in Go struct methods,
 we would have to do something like this:
@@ -174,7 +174,7 @@ func (v *validator) checkTime(name, value time.Time, checkers ...func(time.Time)
 ## A different, generic approach
 
 After spending some time playing with the idea of using generics for validation library, I came to the
-conclusion that it just wasn't worth it. 
+conclusion that it just wasn't worth it.
 
 Instead, I came up with some sort of small framework for creating validation libraries, and it's actually
 quite simple, as it ended up being a very small API, it consists of defining rules and applying them.
@@ -207,7 +207,7 @@ func (r RuleFunc[T]) Apply(ctx context.Context, value T) (bool, string) {
 }
 ```
 
-This means we could easily create a rule with your previously defined funcs like this: 
+This means we could easily create a rule with your previously defined funcs like this:
 
 ```go
 // Package comp defines funcions for cheking if a value meet certain criteria.
@@ -232,7 +232,7 @@ func NotBlank() RuleFunc[string] {
 You could also use the context to generate different reason message, etc. Here's a very simple example:
 
 ```go
-package validator 
+package validator
 
 func NotBlank() RuleFunc[string] {
     return func(ctx context.Context, value string) (bool, string) {
@@ -342,9 +342,9 @@ func GreaterThan[T cmp.Ordered](target T) rules.RuleFunc[T] {
 Now, we can bring this all together. Out validation process will look like this:
 
 ```go
-package handler 
+package handler
 
-type routeRequest struct { 
+type routeRequest struct {
     Name string `json:"name"`
     Email string `json:"email"`
     Age uint8 `json:"age"`
@@ -372,9 +372,9 @@ func handleRoute(w http.ResponseWriter, r *http.Request) {
 From this:
 
 ```go
-package handler 
+package handler
 
-type routeRequest struct { 
+type routeRequest struct {
     Name string `json:"name"`
     Email string `json:"email"`
     Age uint8 `json:"age"`
