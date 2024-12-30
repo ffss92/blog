@@ -71,9 +71,9 @@ func (s *Service) indexContents() error {
 
 	for _, article := range s.cache {
 		// Skip draft articles
-		// if article.Draft {
-		// 	continue
-		// }
+		if article.Draft {
+			continue
+		}
 
 		args := []any{article.Slug, article.Title, article.Subtitle, article.Content}
 		_, err = tx.Exec("INSERT INTO blog_posts_fts (slug, title, subtitle, content) VALUES ($1, $2, $3, $4)", args...)
