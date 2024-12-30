@@ -19,9 +19,16 @@ clients over a simple HTTP connection. Unlike WebSockets, which allow for two-wa
 SSE is a **one-way** communication method where the server sends updates, and the client listens.
 This makes SSE an excellent choice for scenarios like live notifications, activity feeds, or auto-reloading pages.
 
-[MDN](https://developer.mozilla.org) provides great documentation on the
+[MDN](https://developer.mozilla.org) provides a great explantion of the
 [event stream format](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events#event_stream_format).
-If you are not familiar with it, you should check it out. Implementing a SSE endpoint in Go is very straighforward:
+If you are not familiar with it, give it a read!
+
+## Example: Sending Ticks to the Client
+
+### Server Implementation
+
+Implementing a SSE endpoint in Go is very straighforward. In the example below,
+we will send an event to the client every second using a `time.Ticker`:
 
 ```go
 func handleSSE(w http.ResponseWriter, r *http.Request) {
@@ -43,7 +50,7 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
   for {
     select {
     case <-r.Context().Done():
-      // Connection closed the connection
+      // Client closed the connection
       return
     case t := <-ticker.C:
       // Send data to client every tick
@@ -55,12 +62,13 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-In the example above, we sent the current time every second to the client.
-Note that we set `Content-Type: text/event-stream` so the browser knows this
-is a SSE endpoint.
+Rember to set the `Content-Type` header to `text/event-stream` to ensure that
+the browser recognizes this as an SSE endpoint.
 
-The client implementation is also simple, since all major browsers support SSE
-through the [EventSource API](https://developer.mozilla.org/en-US/docs/Web/API/EventSource).
+### Client Implementation
+
+Using SSE on the client side is simple, thanks to the [EventSource API](https://developer.mozilla.org/en-US/docs/Web/API/EventSource),
+which is supported by all major browsers.
 
 ```html
 <!DOCTYPE html>
@@ -84,29 +92,29 @@ through the [EventSource API](https://developer.mozilla.org/en-US/docs/Web/API/E
 </html>
 ```
 
-Since we defined a event type in our HTTP handler using `event: tick`. We can
-use `addEventListener` to target that specific event in our client.
+Since we specified the event type `tick` in our Go handler, we can listen for it
+using `addEventListener` on the client side.
 
-## Implementing a file watcher endpoint
+## Implementing a File Watcher Endpoint
 
 Now that we know how SSE works and how to implement it in Go, we can use libraries like
 [fsnotify](https://github.com/fsnotify/fsnotify) to send notifications to the browser whenever
 a file is modified.
 
-### Watching file changes
+### Watching File Changes
 
-First, let's add the `fsnotify` package to the project by running:
+First, let's add the `fsnotify` package to the project by running the following command:
 
 ```bash
 go get github.com/fsnotify/fsnotify
 ```
 
-Now, let's create a new HTTP handler that listens the files changes and send
-events to the client:
+Now let's implement a handler that sends events to the client whenever files in specified directories are modified:
 
 ```go
 func handleWatch(w http.ResponseWriter, r *http.Request) {
-  // Dirs that will be watched
+  // Dirs that will be watched,
+  // adapt this to your project structure
   targets := []string{"articles", "templates"} 
 
   watcher, err := fsnotify.NewWatcher()
@@ -150,9 +158,9 @@ func handleWatch(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-### Reloading pages
+### Reloading Pages
 
-The client implementation is also very simple. We just reload the page every time we get a
+The client implementation is even simpler compared to the ticker example. We just reload the page every time we get a
 new `mod` event:
 
 ```html
@@ -175,23 +183,28 @@ new `mod` event:
 </html>
 ```
 
-If you are using tailwindcss or some other frontend tool that needs some time 
-to compile, you can add a `setTimeout` to delay the reload a little bit:
+If you use tools like TailwindCSS or others that require compilation time, add a delay using `setTimeout`
+to make sure the page is reloaded after the compilation is done:
 
 ```html
 <script>
   const es = new EventSource("/sse");
+
   let id;
   es.addEventListener("mod", () => {
     clearTimeout(id);
     setTimeout(() => {
       location.reload();
     }, 500);
-  })
+  });
 </script>
 ```
 
-You can check out the implementation that I use for the development of this
-blog [here](https://github.com/ffss92/blog/blob/main/cmd/server/handle_watch.go).
+## Wrapping Up
+
+With SSE and `fsnotify`, you can create a lightweight and effective auto-reloading mechanism for development.
+
+Check out the implementation I use for my blog's development
+[here](https://github.com/ffss92/blog/blob/main/cmd/server/handle_watch.go).
 
 Thanks for reading!
