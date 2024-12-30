@@ -13,15 +13,10 @@
     {{template "header" .}}
     {{template "content" .}}
     {{block "post-content" .}}{{end}}
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-      lucide.createIcons();
-    </script>
-
+    
     {{if .Dev}}
       <script>
         const es = new EventSource("/watch");
-
         let id;
         es.addEventListener("mod", () => {
           if (id) {

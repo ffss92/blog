@@ -5,7 +5,7 @@ subtitle: |
   blog using it's Full-Text Search capabilities.
 author: "@ffss"
 draft: true
-date: "2024-12-30"
+date: "2024-12-31"
 tags:
   - SQLite
   - FTS

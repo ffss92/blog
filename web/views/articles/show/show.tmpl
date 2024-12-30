@@ -11,7 +11,7 @@
         <div>
             <div class="font-bold">{{.Author.Name}}</div>
             <div class="flex items-center gap-2">
-                <i class="size-4" data-lucide="calendar"></i> {{.Article.Date}}
+                <span class="size-4">{{template "calendar-icon"}}</span> {{.Article.Date}}
             </div>
         </div>
     </a>

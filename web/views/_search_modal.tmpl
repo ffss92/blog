@@ -10,10 +10,14 @@
                     class="bg-stone-50 py-2.5 pl-10 pr-2 w-full rounded-md shadow-md focus-visible:outline-none text-sm"
                 >
                 <div id="search-loading-icon" hidden class="absolute left-2 top-1/2 -translate-y-1/2">
-                    <i data-lucide="loader-circle" class="size-5 text-stone-700 animate-spin"></i>
+                    <div class="size-5 text-stone-700 animate-spin">
+                        {{template "loader-icon"}}
+                    </div>
                 </div>
                 <div id="search-idle-icon" class="absolute left-2 top-1/2 -translate-y-1/2">
-                    <i id="search-idle-icon" data-lucide="search" class="size-5 text-stone-700"></i>
+                    <div class="size-5 text-stone-700">
+                        {{template "search-icon"}}
+                    </div>
                 </div>
             </div>
 
