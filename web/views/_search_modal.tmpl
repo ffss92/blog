@@ -1,13 +1,13 @@
 {{define "search-modal"}}
 <div id="search-modal" hidden role="dialog" tabindex="-1">
-    <div class="absolute inset-0 bg-black/40 min-h-dvh flex flex-col p-4">
+    <div class="fixed inset-0 bg-black/40 p-4">
         <div id="search-content" class="max-w-md mx-auto w-full my-20 space-y-2">
             <div class="relative">
                 <input 
                     id="search-input"
                     type="text"
                     placeholder="Search content" 
-                    class="bg-stone-50 py-2 pl-10 pr-2 w-full rounded-md shadow-md focus-visible:outline-none"
+                    class="bg-stone-50 py-2.5 pl-10 pr-2 w-full rounded-md shadow-md focus-visible:outline-none text-sm"
                 >
                 <div id="search-loading-icon" hidden class="absolute left-2 top-1/2 -translate-y-1/2">
                     <i data-lucide="loader-circle" class="size-5 text-stone-700 animate-spin"></i>

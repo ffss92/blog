@@ -71,6 +71,7 @@ function openModal() {
   searchModal.addEventListener("click", handleClickOutside);
   searchModal.addEventListener("keydown", handleKeydown);
   searchModal.hidden = false;
+  document.body.classList.add("overflow-hidden");
   searchInput.focus();
 }
 
@@ -81,7 +82,7 @@ function closeModal() {
   searchModal.removeEventListener("click", handleClickOutside);
   searchModal.removeEventListener("keydown", handleKeydown);
   searchModal.hidden = true;
-  searchToggle.focus();
+  document.body.classList.remove("overflow-hidden");
 }
 
 searchToggle.addEventListener("click", () => {
