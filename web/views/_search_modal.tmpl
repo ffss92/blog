@@ -1,0 +1,24 @@
+{{define "search-modal"}}
+<div id="search-modal" hidden role="dialog" tabindex="-1">
+    <div class="absolute inset-0 bg-black/40 min-h-dvh flex flex-col p-4">
+        <div id="search-content" class="max-w-md mx-auto w-full my-20 space-y-2">
+            <div class="relative">
+                <input 
+                    id="search-input"
+                    type="text"
+                    placeholder="Search content" 
+                    class="bg-stone-50 py-2 pl-10 pr-2 w-full rounded-md shadow-md focus-visible:outline-none"
+                >
+                <div id="search-loading-icon" hidden class="absolute left-2 top-1/2 -translate-y-1/2">
+                    <i data-lucide="loader-circle" class="size-5 text-stone-700 animate-spin"></i>
+                </div>
+                <div id="search-idle-icon" class="absolute left-2 top-1/2 -translate-y-1/2">
+                    <i id="search-idle-icon" data-lucide="search" class="size-5 text-stone-700"></i>
+                </div>
+            </div>
+
+            <div id="search-results" class="p-2 bg-stone-50 rounded-md shadow-md"></div>
+        </div>
+    </div>
+</div>
+{{end}}

@@ -2,6 +2,7 @@ package blog
 
 import (
 	"context"
+	"strconv"
 )
 
 type SearchResult struct {
@@ -38,8 +39,8 @@ func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleSearc
 	FROM blog_posts_fts
 	WHERE blog_posts_fts MATCH $1 
 	ORDER BY score ASC
-	LIMIT 10`
-	rows, err := s.db.QueryContext(ctx, query, q)
+	LIMIT 5`
+	rows, err := s.db.QueryContext(ctx, query, strconv.Quote(q))
 	if err != nil {
 		return nil, err
 	}
@@ -69,6 +70,11 @@ func (s *Service) indexContents() error {
 	}
 
 	for _, article := range s.cache {
+		// Skip draft articles
+		// if article.Draft {
+		// 	continue
+		// }
+
 		args := []any{article.Slug, article.Title, article.Subtitle, article.Content}
 		_, err = tx.Exec("INSERT INTO blog_posts_fts (slug, title, subtitle, content) VALUES ($1, $2, $3, $4)", args...)
 		if err != nil {

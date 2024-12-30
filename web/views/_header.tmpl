@@ -4,8 +4,22 @@
         <a class="text-xl font-bold" href="/">ffss.dev</a>
     </div>
 
-    <div class="flex gap-4 text-sm font-semibold items-center">
-        <a href="/articles">Articles</a>
+    <div class="flex gap-4 font-semibold items-center">
+        <button id="search-toggle" class="p-2 md:px-3 md:py-1.5 border border-stone-300 text-stone-700 rounded-md flex items-center justify-center gap-2 shadow text-sm">
+            <i data-lucide="search" class="size-5"></i>
+
+            <div class="hidden md:flex items-center space-x-2">
+                <span >
+                    Search content
+                </span>
+    
+                <code class="text-xs p-1 bg-stone-200 rounded-md">ctrl+k</code>
+            </div>
+        </button>
+
+        <a class="text-sm" href="/articles">Articles</a>
     </div>
 </header>
-{{end}}
+
+{{template "search-modal" .}}
+{{end}} 

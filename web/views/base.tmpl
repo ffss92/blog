@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content='{{block "description" .}}Some golang ideas I have.{{end}}'>
     <link rel="stylesheet" href="/static/css/style.css">
+    <script type="module" src="/static/js/app.js"></script>
     <script defer data-domain="ffss.dev" src="https://analytics.ffss.dev/js/script.js"></script>
     <title>{{with .HTMLTitle}}{{.}} - {{end}}ffss.dev</title>
     {{block "head" .}}{{end}}
@@ -15,18 +16,21 @@
     {{block "post-content" .}}{{end}}
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
-      lucide.createIcons({
-        icons: {
-            Calendar: lucide.Calendar,
-        }
-      });
+      lucide.createIcons();
     </script>
 
     {{if .Dev}}
       <script>
         const es = new EventSource("/watch");
+
+        let id;
         es.addEventListener("mod", () => {
-          location.reload();
+          if (id) {
+            clearTimeout(id);
+          }
+          id = setTimeout(() => {
+            location.reload();
+          }, 500)
         });
       </script>
     {{end}}
