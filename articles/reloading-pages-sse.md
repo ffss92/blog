@@ -3,8 +3,8 @@ title: Effortless Auto-Reload with Server-Sent Events in Go.
 subtitle: |
   Discover how SSE can streamline auto-reloading for a smoother development process in Go.
 author: "@ffss"
-draft: true
-date: "2024-12-31"
+draft: false
+date: "2024-12-30"
 tags:
   - Go
   - HTTP
