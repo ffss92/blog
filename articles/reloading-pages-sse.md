@@ -155,3 +155,8 @@ new `mod` event:
   </body>
 </html>
 ```
+
+You can check out the implementation the I use for the development of this
+blog [here](https://github.com/ffss92/blog/blob/main/cmd/server/handle_watch.go).
+
+Thanks for reading!
