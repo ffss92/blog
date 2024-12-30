@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Raleway"],
+        sans: ["Open Sans"],
         heading: ["Raleway"],
+        mono: ["JetBrainsMono"],
       },
       minHeight: {
         header: "calc(100dvh - 5rem)",
