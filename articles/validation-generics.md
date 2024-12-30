@@ -4,7 +4,7 @@ subtitle: |
   Go's generics may not be as extensive as those in other languages, but they still offer powerful capabilities. 
   In this article, I'll demonstrate how I utilize generics to simplify and enhance validation in my projects.
 author: "@ffss"
-draft: false
+draft: true
 date: "2024-12-01"
 tags:
   - Go

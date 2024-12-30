@@ -21,5 +21,14 @@
         }
       });
     </script>
+
+    {{if .Dev}}
+      <script>
+        const es = new EventSource("/watch");
+        es.addEventListener("mod", () => {
+          location.reload();
+        });
+      </script>
+    {{end}}
 </body>
 </html>

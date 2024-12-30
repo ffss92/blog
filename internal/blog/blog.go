@@ -132,17 +132,15 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 
 // If dev mode is on, parses all articles and set them to the cache.
 func (s *Service) refreshArticles() error {
-	if s.dev {
-		s.mu.Lock()
-		defer s.mu.Unlock()
-		cache, err := s.parseArticles(s.md, s.articles)
-		if err != nil {
-			return fmt.Errorf("failed to refresh articles from fs: %w", err)
-		}
-		if err := s.indexContents(); err != nil {
-			return err
-		}
-		s.cache = cache
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	cache, err := s.parseArticles(s.md, s.articles)
+	if err != nil {
+		return fmt.Errorf("failed to refresh articles from fs: %w", err)
 	}
+	if err := s.indexContents(); err != nil {
+		return err
+	}
+	s.cache = cache
 	return nil
 }

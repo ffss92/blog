@@ -14,8 +14,10 @@ github.com/dlclark/regexp2 v1.11.0 h1:G/nrcoOa7ZXlpoa/91N3X7mM3r8eIlMBBJZvsz/mxK
 github.com/dlclark/regexp2 v1.11.0/go.mod h1:DHkYz0B9wPfa6wondMfaivmHpzrQ3v9q8cnmRbL6yW8=
 github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkpeCY=
 github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
-github.com/ffss92/fileserver v0.4.0 h1:GDUNx0Usbh/g4BABmpJLpVcN5KxVAjWXWnRQ6pQlyTo=
-github.com/ffss92/fileserver v0.4.0/go.mod h1:rW4E+jyZhkS+IdtO2SqUTRS87X7sBJQ/8Xul8SI9TDU=
+github.com/ffss92/fileserver v0.6.0 h1:eKCRYbYkcep13r6fvL6M5/40vsjFp6l1XQFcPy/Nt1w=
+github.com/ffss92/fileserver v0.6.0/go.mod h1:rW4E+jyZhkS+IdtO2SqUTRS87X7sBJQ/8Xul8SI9TDU=
+github.com/fsnotify/fsnotify v1.8.0 h1:dAwr6QBTBZIkG8roQaJjGof0pp0EeF+tNV7YBP3F/8M=
+github.com/fsnotify/fsnotify v1.8.0/go.mod h1:8jBTzvmWwFyi3Pb8djgCCO5IBqzKJ/Jwo8TRcHyHii0=
 github.com/go-chi/chi/v5 v5.1.0 h1:acVI1TYaD+hhedDJ3r54HyA6sExp3HfXq7QWEEY/xMw=
 github.com/go-chi/chi/v5 v5.1.0/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
 github.com/google/pprof v0.0.0-20240409012703-83162a5b38cd h1:gbpYu9NMq8jhDVbvlGkMFWCjLFlqqEZjEmObmhUy6Vo=

@@ -1,11 +1,11 @@
 ---
-title: Indexing my blog with SQLite's Full-Text Search.
+title: Building a Fast, Searchable Blog with SQLite FTS.
 subtitle: |
   SQLite is amazing, actually. In this article I'll show you how I indexed my
-  (micro) blog using it's Full-Text Search capabilities.
+  blog using it's Full-Text Search capabilities.
 author: "@ffss"
 draft: true
-date: "2024-12-03"
+date: "2024-12-30"
 tags:
   - SQLite
   - FTS

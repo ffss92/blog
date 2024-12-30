@@ -34,12 +34,15 @@ func (s *Service) GetArticle(ctx context.Context, slug string) (*Article, error)
 	if err != nil {
 		return nil, err
 	}
+
 	return article, nil
 }
 
 func (s *Service) getArticle(slug string) (*Article, error) {
-	if err := s.refreshArticles(); err != nil {
-		return nil, err
+	if s.dev {
+		if err := s.refreshArticles(); err != nil {
+			return nil, err
+		}
 	}
 
 	article, ok := s.cache[slug]
@@ -57,13 +60,17 @@ func (s *Service) ListArticles(ctx context.Context) ([]*Article, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return articles, nil
 }
 
 func (s *Service) listArticles() ([]*Article, error) {
-	if err := s.refreshArticles(); err != nil {
-		return nil, err
+	if s.dev {
+		if err := s.refreshArticles(); err != nil {
+			return nil, err
+		}
 	}
+
 	articles := make([]*Article, 0)
 	for _, article := range s.cache {
 		if !s.dev && article.Draft {

@@ -23,5 +23,9 @@ func (app *application) routes() http.Handler {
 		r.Get("/search", app.handleSearch())
 	})
 
+	if app.cfg.dev {
+		r.Get("/watch", app.handleWatch())
+	}
+
 	return r
 }
