@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex gap-4 font-semibold items-center">
-        <button id="search-toggle" class="p-2 md:px-3 md:py-1.5 border border-stone-300 text-stone-700 rounded-md flex items-center justify-center gap-2 shadow text-sm">
+        <button id="search-toggle" class="p-2 md:px-3 md:py-1.5 border border-stone-300 text-stone-700 rounded-md flex items-center justify-center gap-2 shadow-sm hover:shadow text-sm">
             <div class="size-5">{{template "search-icon"}}</div>
 
             <div class="hidden md:flex items-center space-x-2">
@@ -13,7 +13,13 @@
                     Search content
                 </span>
     
-                <code class="text-xs p-1 bg-stone-200 rounded-md">ctrl+k</code>
+                <code class="text-xs py-1 px-2 bg-stone-200 rounded-md flex items-center justify-center">
+                    {{if or .UserAgent.IsMacOS .UserAgent.IsIOS}}
+                        <div class="size-3">{{template "command-icon"}}</div> <span>+k</span>
+                    {{else}}
+                        ctrl+k
+                    {{end}}
+                </code>
             </div>
         </button>
 

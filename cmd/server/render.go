@@ -7,17 +7,24 @@ import (
 	"net/http"
 
 	"ffss.dev/cmd/server/templates"
+	"github.com/mileusna/useragent"
 )
 
 type basePage struct {
 	Dev       bool
+	IsMac     bool
 	HTMLTitle string
+	UserAgent useragent.UserAgent
 }
 
-func (app *application) newBasePage(_ *http.Request, title string) basePage {
+func (app *application) newBasePage(r *http.Request, title string) basePage {
+	ua := useragent.Parse(r.UserAgent())
+
 	return basePage{
 		Dev:       app.cfg.dev,
 		HTMLTitle: title,
+		IsMac:     ua.IsMacOS() || ua.IsIOS(),
+		UserAgent: useragent.Parse(r.UserAgent()),
 	}
 }
 

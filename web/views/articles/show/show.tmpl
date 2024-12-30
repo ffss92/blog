@@ -1,7 +1,11 @@
+{{define "head"}}
+<script type="module" src="/static/js/code.js"></script>
+{{end}}
+
 {{define "description"}}{{.Article.Subtitle}}{{end}}
 
 {{define "articles-content"}}
-<section class="max-w-2xl space-y-4">
+<section class="max-w-3xl space-y-4">
     <h1 class="text-3xl md:text-5xl font-bold font-heading">
         {{.Article.Title}}
     </h1>
@@ -15,12 +19,6 @@
             </div>
         </div>
     </a>
-
-    <!-- <ul class="flex gap-2">
-        {{range .Article.Tags}}
-        <li class="text-xs font-medium underline">#{{.}}</li>
-        {{end}}
-    </ul> -->
 
     <article class="article">
         <p>{{.Article.Subtitle}}</p>

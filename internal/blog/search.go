@@ -6,7 +6,7 @@ import (
 )
 
 type SearchResult struct {
-	Articles []*ArticleSearchResult `json:"articles"`
+	Articles []*ArticleResult `json:"articles"`
 }
 
 func (s *Service) Search(ctx context.Context, q string) (*SearchResult, error) {
@@ -21,7 +21,7 @@ func (s *Service) Search(ctx context.Context, q string) (*SearchResult, error) {
 	return result, nil
 }
 
-type ArticleSearchResult struct {
+type ArticleResult struct {
 	Slug     string `json:"slug"`
 	Title    string `json:"title"`
 	Subtitle string `json:"subtitle"`
@@ -29,7 +29,7 @@ type ArticleSearchResult struct {
 	score float64
 }
 
-func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleSearchResult, error) {
+func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleResult, error) {
 	query := `
 	SELECT 
 		slug, 
@@ -45,9 +45,9 @@ func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleSearc
 		return nil, err
 	}
 
-	articles := make([]*ArticleSearchResult, 0)
+	articles := make([]*ArticleResult, 0)
 	for rows.Next() {
-		var result ArticleSearchResult
+		var result ArticleResult
 		err := rows.Scan(&result.Slug, &result.Title, &result.Subtitle, &result.score)
 		if err != nil {
 			return nil, err

@@ -17,6 +17,7 @@ func (app *application) handleWatch() http.HandlerFunc {
 		"web/views/articles",
 		"web/views/articles/index",
 		"web/views/articles/show",
+		"web/static/js",
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {

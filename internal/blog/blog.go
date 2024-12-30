@@ -37,7 +37,7 @@ func New(dev bool, db *sql.DB, articles fs.FS) (*Service, error) {
 			highlighting.NewHighlighting(
 				highlighting.WithStyle("catppuccin-mocha"),
 				highlighting.WithFormatOptions(
-					chromahtml.WithLineNumbers(true),
+					chromahtml.WithLineNumbers(false),
 				),
 			),
 		),
