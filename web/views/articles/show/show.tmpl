@@ -1,28 +1,36 @@
 {{define "head"}}
-<script type="module" src="/static/js/code.js"></script>
+<script type="module" src="/static/js/article.js"></script>
 {{end}}
 
 {{define "description"}}{{.Article.Subtitle}}{{end}}
 
 {{define "articles-content"}}
-<section class="max-w-3xl space-y-4">
-    <h1 class="text-3xl md:text-5xl font-bold font-heading">
-        {{.Article.Title}}
-    </h1>
-
-    <a href="/authors/{{.Author.Handle}}" class="text-sm flex items-center gap-2 w-fit">
-        <img class="size-10 rounded-full" src="{{.Author.ImageURL}}" alt="{{.Author.Name}}'s picture"> 
-        <div>
-            <div class="font-bold">{{.Author.Name}}</div>
-            <div class="flex items-center gap-2">
-                <span class="size-4">{{template "calendar-icon"}}</span> {{.Article.Date}}
+<section class="flex gap-8">
+    <div class="max-w-2xl space-y-4 mx-auto">
+        <h1 class="text-3xl md:text-5xl font-bold font-heading">
+            {{.Article.Title}}
+        </h1>
+    
+        <a href="/authors/{{.Author.Handle}}" class="text-sm flex items-center gap-2 w-fit">
+            <img class="size-10 rounded-full" src="{{.Author.ImageURL}}" alt="{{.Author.Name}}'s picture"> 
+            <div>
+                <div class="font-bold">{{.Author.Name}}</div>
+                <div class="flex items-center gap-2">
+                    <span class="size-4">{{template "calendar-icon"}}</span> {{.Article.Date}}
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
+    
+        <article class="article">
+            <p>{{.Article.Subtitle}}</p>
+            {{.Article.Content}}
+        </article>
+    </div>
 
-    <article class="article">
-        <p>{{.Article.Subtitle}}</p>
-        {{.Article.Content}}
-    </article>
+    <div class="hidden lg:block flex-1 flex-shrink-0 w-full relative">
+        <div class="sticky top-4">
+            <div id="toc"></div>
+        </div>
+    </div>
 </section>
 {{end}}

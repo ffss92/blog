@@ -151,8 +151,8 @@ function createResultEntry(article) {
 
 function createEmptyResult() {
   const p = document.createElement("p");
-  p.innerText = "No results...";
-  p.classList = "text-center italic text-stone-700 text-sm p-2";
+  p.innerText = "No results";
+  p.classList = "text-center italic text-stone-600 text-sm p-2";
   return p;
 }
 
