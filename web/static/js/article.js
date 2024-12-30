@@ -59,7 +59,7 @@ document.querySelectorAll("pre > code").forEach((el) => {
 
   const copyBtn = document.createElement("button");
   copyBtn.className =
-    "p-2 rounded-md absolute hidden group-hover:block text-sm top-2 right-2";
+    "p-2 rounded-md absolute hidden md:group-hover:block text-sm top-2 right-2";
   copyBtn.innerText = "COPY";
 
   let id;

@@ -4,7 +4,7 @@
 
 @layer components {
   .article {
-    @apply prose lg:prose-lg prose-headings:font-heading prose-code:text-sm prose-pre:shadow-sm prose-pre:whitespace-pre-wrap prose-pre:break-all;
+    @apply prose lg:prose-lg prose-headings:font-heading prose-code:text-sm prose-pre:shadow-sm md:prose-pre:whitespace-pre-wrap md:prose-pre:break-all;
   }
 }
 
