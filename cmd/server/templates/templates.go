@@ -9,6 +9,7 @@ import (
 func Parse(views fs.FS) (map[string]*template.Template, error) {
 	viewSet := [][]string{
 		{"home"},
+		{"error"},
 		{"articles/index", "articles"},
 		{"articles/show", "articles"},
 		{"authors/show", "authors"},
