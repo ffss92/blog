@@ -12,6 +12,7 @@ func (app *application) routes() http.Handler {
 	r.NotFound(app.notFound)
 
 	r.Use(app.recoverer)
+	r.Use(app.realIP)
 
 	r.Mount("/static/", http.StripPrefix("/static/", fileserver.ServeFS(app.static)))
 
