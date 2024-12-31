@@ -54,8 +54,8 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
       return
     case t := <-ticker.C:
       // Send data to client every tick
-      fmt.Fprint("event: tick\n")
-      fmt.Fprintf("data: %s\n\n", t)
+      fmt.Fprint(w, "event: tick\n")
+      fmt.Fprintf(w, "data: %s\n\n", t)
       flusher.Flush() 
     }
   }
