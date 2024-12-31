@@ -3,6 +3,7 @@ package blog
 import (
 	"bytes"
 	"database/sql"
+	"errors"
 	"fmt"
 	"html/template"
 	"io"
@@ -119,6 +120,18 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 		}
 
 		slug := strings.TrimSuffix(path, ".md")
+
+		var views int
+		err = s.db.QueryRow("SELECT COUNT(*) FROM pageviews WHERE slug = $1", slug).Scan(&views)
+		if err != nil {
+			switch {
+			case errors.Is(err, sql.ErrNoRows):
+				views = 0
+			default:
+				return nil, err
+			}
+		}
+
 		cache[slug] = &Article{
 			Slug:            slug,
 			Content:         template.HTML(buf.String()),

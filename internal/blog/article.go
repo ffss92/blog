@@ -3,6 +3,7 @@ package blog
 import (
 	"context"
 	"errors"
+	"fmt"
 	"html/template"
 	"slices"
 	"strings"
@@ -25,6 +26,7 @@ type Article struct {
 	Slug       string
 	Content    template.HTML
 	RawContent []byte
+	PageViews  int
 
 	ArticleMetadata
 }
@@ -84,4 +86,18 @@ func (s *Service) listArticles() ([]*Article, error) {
 	})
 
 	return articles, nil
+}
+
+func (s *Service) SavePageview(ctx context.Context, slug, ipAddress, userAgent, referrer string) error {
+	query := `
+	INSERT INTO pageviews (slug, ip_address, user_agent, referrer)
+	VALUES ($1, $2, $3, $4)`
+	args := []any{slug, ipAddress, userAgent, referrer}
+
+	_, err := s.db.ExecContext(ctx, query, args...)
+	if err != nil {
+		return fmt.Errorf("blog: failed to save pageview: %w", err)
+	}
+
+	return nil
 }

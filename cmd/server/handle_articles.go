@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"log/slog"
 	"net/http"
 
 	"ffss.dev/internal/blog"
@@ -56,6 +57,11 @@ func (app *application) handleArticleShow() http.HandlerFunc {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}
 			return
+		}
+
+		err = app.blog.SavePageview(r.Context(), slug, r.RemoteAddr, r.UserAgent(), r.Referer())
+		if err != nil {
+			app.logger.Error("failed to save pageview", slog.String("err", err.Error()))
 		}
 
 		app.render(w, r, "articles/show", articleShowPage{
