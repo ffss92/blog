@@ -11,8 +11,9 @@ func (app *application) routes() http.Handler {
 	r := chi.NewMux()
 	r.NotFound(app.notFound)
 
-	r.Use(app.recoverer)
 	r.Use(app.realIP)
+	r.Use(app.requestLogger)
+	r.Use(app.recoverer)
 
 	r.Mount("/static/", http.StripPrefix("/static/", fileserver.ServeFS(app.static)))
 

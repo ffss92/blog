@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
+	"strings"
+	"time"
 )
 
 func (app *application) recoverer(next http.Handler) http.Handler {
@@ -19,8 +22,24 @@ func (app *application) recoverer(next http.Handler) http.Handler {
 func (app *application) realIP(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !app.cfg.dev {
-			fmt.Println(r.Header.Get("X-Forwarded-For"))
+			r.RemoteAddr = strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]
 		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func (app *application) requestLogger(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		t := time.Now()
+		defer func() {
+			app.logger.Info(
+				"http request",
+				slog.String("method", r.Method),
+				slog.String("uri", r.URL.RequestURI()),
+				slog.String("ip_address", r.RemoteAddr),
+				slog.Duration("duration", time.Since(t)),
+			)
+		}()
 		next.ServeHTTP(w, r)
 	})
 }
