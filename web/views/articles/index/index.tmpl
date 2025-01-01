@@ -1,18 +1,33 @@
 {{define "articles-content"}}
 <section class="space-y-4">
-    <h1 class="text-4xl font-bold">Articles</h1>
+    <div class="space-y-2">
+        <h1 class="text-4xl font-bold">Articles</h1>
+        <ul class="flex items-center gap-2">
+            <li>
+                <a {{if eq .Sort "date"}}data-current{{end}} class="sort" href="?sort=date">
+                    Date
+                </a>
+            </li>
+            <li>
+                <a {{if eq .Sort "popular"}}data-current{{end}} class="sort" href="?sort=popular">
+                    Popular
+                </a>
+            </li>
+        </ul>
+    </div>
 
-    <ul class="max-w-lg space-y-4">
+    <ul class="max-w-lg space-y-2">
         {{range .Articles}}
         <li>
-            <a class="text-lg space-y-2" href="/articles/{{.Slug}}">
+            <a 
+                class="text-lg space-y-2 flex flex-col focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-300 p-2 rounded" 
+                href="/articles/{{.Slug}}"
+            >
                 <div class="space-y-1">
-                    <p class="font-semibold">{{.Title}}</p>
-                    <div class="flex gap-1">
-                        {{range .Tags}}
-                        <span class="text-xs">#{{.}}</span>
-                        {{end}}
-                    </div>
+                    <h2 class="font-semibold">{{.Title}}</h2>
+                    <p class="text-sm">
+                        {{.Date}}
+                    </p>
                 </div>
                 <p class="text-sm text-stone-700">
                     {{.Subtitle}}

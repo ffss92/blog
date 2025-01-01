@@ -44,7 +44,7 @@ if (headers.length) {
     list.appendChild(item);
 
     const link = document.createElement("a");
-    link.className = `${header.paddingClass}`;
+    link.className = `${header.paddingClass} text-sm`;
     link.textContent = header.title;
     link.href = `#${header.id}`;
     item.appendChild(link);

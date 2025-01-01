@@ -133,6 +133,7 @@ function createResultEntry(article) {
   const item = document.createElement("li");
   item.className = "p-2";
   const link = document.createElement("a");
+  link.className = "flex flex-col p-1 rounded";
   link.href = `/articles/${article.slug}`;
   item.appendChild(link);
 

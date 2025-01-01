@@ -6,11 +6,27 @@
   .article {
     @apply prose lg:prose-lg prose-headings:font-heading prose-code:text-sm prose-pre:shadow-sm md:prose-pre:whitespace-pre-wrap md:prose-pre:break-all;
   }
+
+  .sort {
+    @apply text-sm px-2 py-1 bg-stone-50 text-stone-800 rounded-md font-medium;
+  }
+
+  .sort[data-current] {
+    @apply bg-stone-800 text-stone-50;
+  }
 }
 
 @layer base {
   body {
     @apply text-stone-900 bg-stone-50;
+  }
+
+  a,
+  button,
+  input,
+  textarea,
+  [tabindex] {
+    @apply focus-visible:outline-none focus-visible:ring focus-visible:ring-blue-300;
   }
 }
 

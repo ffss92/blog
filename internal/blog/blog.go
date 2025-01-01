@@ -137,6 +137,7 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 			Content:         template.HTML(buf.String()),
 			RawContent:      contents,
 			ArticleMetadata: articleMetadata,
+			PageViews:       views,
 		}
 	}
 
@@ -145,6 +146,10 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 
 // If dev mode is on, parses all articles and set them to the cache.
 func (s *Service) refreshArticles() error {
+	if !s.dev {
+		return nil
+	}
+
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	cache, err := s.parseArticles(s.md, s.articles)

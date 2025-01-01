@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"html/template"
 	"slices"
-	"strings"
 )
 
 var (
@@ -41,10 +40,8 @@ func (s *Service) GetArticle(ctx context.Context, slug string) (*Article, error)
 }
 
 func (s *Service) getArticle(slug string) (*Article, error) {
-	if s.dev {
-		if err := s.refreshArticles(); err != nil {
-			return nil, err
-		}
+	if err := s.refreshArticles(); err != nil {
+		return nil, err
 	}
 
 	article, ok := s.cache[slug]
@@ -57,8 +54,8 @@ func (s *Service) getArticle(slug string) (*Article, error) {
 	return article, nil
 }
 
-func (s *Service) ListArticles(ctx context.Context) ([]*Article, error) {
-	articles, err := s.listArticles()
+func (s *Service) ListArticles(ctx context.Context, sort string) ([]*Article, error) {
+	articles, err := s.listArticles(sort)
 	if err != nil {
 		return nil, err
 	}
@@ -66,11 +63,9 @@ func (s *Service) ListArticles(ctx context.Context) ([]*Article, error) {
 	return articles, nil
 }
 
-func (s *Service) listArticles() ([]*Article, error) {
-	if s.dev {
-		if err := s.refreshArticles(); err != nil {
-			return nil, err
-		}
+func (s *Service) listArticles(sort string) ([]*Article, error) {
+	if err := s.refreshArticles(); err != nil {
+		return nil, err
 	}
 
 	articles := make([]*Article, 0)
@@ -81,9 +76,12 @@ func (s *Service) listArticles() ([]*Article, error) {
 		articles = append(articles, article)
 	}
 
-	slices.SortFunc(articles, func(a *Article, b *Article) int {
-		return -strings.Compare(a.Date, b.Date)
-	})
+	switch sort {
+	case "popular":
+		slices.SortFunc(articles, popularSort)
+	default:
+		slices.SortFunc(articles, dateSort)
+	}
 
 	return articles, nil
 }

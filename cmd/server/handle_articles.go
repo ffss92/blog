@@ -11,19 +11,31 @@ import (
 
 type articleIndexPage struct {
 	basePage
+	Sort     string
 	Articles []*blog.Article
 }
 
 func (app *application) handleArticleIndex() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		articles, err := app.blog.ListArticles(r.Context())
+		var sort string
+
+		switch r.URL.Query().Get("sort") {
+		case "date", "popular":
+			sort = r.URL.Query().Get("sort")
+		default:
+			sort = "date"
+		}
+
+		articles, err := app.blog.ListArticles(r.Context(), sort)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
+
 		app.render(w, r, "articles/index", articleIndexPage{
 			basePage: app.newBasePage(r, "Articles"),
 			Articles: articles,
+			Sort:     sort,
 		})
 	}
 }

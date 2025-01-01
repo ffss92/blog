@@ -1,5 +1,5 @@
 ---
-title: Easy Auto-Reload with Server-Sent Events in Go.
+title: Easy Auto-Reload with Server-Sent Events in Go
 subtitle: |
   Reloading pages every time we make a change in development can be a little tiresome.
   Discover how SSE can streamline auto-reloading for a smoother development process in Go.

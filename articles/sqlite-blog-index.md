@@ -1,12 +1,13 @@
 ---
-title: Building a Fast, Searchable Blog with SQLite FTS.
+title: Building a Fast, Searchable Blog with SQLite
 subtitle: |
-  SQLite is amazing, actually. In this article I'll show you how I indexed my
+  A database on a single file is amazing, actually. In this article I'll show you how I indexed my
   blog using SQLite's Full-Text Search capabilities.
 author: "@ffss"
 draft: true
-date: "2024-12-31"
+date: "2025-12-01"
 tags:
   - SQLite
   - FTS
+  - Go
 ---

@@ -55,6 +55,7 @@ func run() error {
 	flag.Parse()
 
 	logger := logging.NewLogger(slog.LevelInfo, cfg.dev)
+	slog.SetDefault(logger)
 
 	db, err := sqlite.Connect(context.Background(), cfg.dbPath)
 	if err != nil {
