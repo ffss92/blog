@@ -21,25 +21,44 @@ func (app *application) recoverer(next http.Handler) http.Handler {
 
 func (app *application) realIP(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !app.cfg.dev {
+		if !app.isDev() {
 			r.RemoteAddr = strings.Split(r.Header.Get("X-Forwarded-For"), ",")[0]
 		}
 		next.ServeHTTP(w, r)
 	})
 }
 
-func (app *application) requestLogger(next http.Handler) http.Handler {
+type logResponseWriter struct {
+	http.ResponseWriter
+	status int
+}
+
+func (l *logResponseWriter) WriteHeader(status int) {
+	l.status = status
+	l.ResponseWriter.WriteHeader(status)
+}
+
+func (l *logResponseWriter) Unwrap() http.ResponseWriter {
+	return l.ResponseWriter
+}
+
+func (app *application) reqLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t := time.Now()
+		lw := &logResponseWriter{ResponseWriter: w, status: http.StatusOK}
+
 		defer func() {
 			app.logger.Info(
 				"http request",
 				slog.String("method", r.Method),
-				slog.String("uri", r.URL.RequestURI()),
+				slog.String("url", r.URL.String()),
+				slog.Int("status", lw.status),
+				slog.String("proto", r.Proto),
 				slog.String("ip_address", r.RemoteAddr),
 				slog.Duration("duration", time.Since(t)),
 			)
 		}()
-		next.ServeHTTP(w, r)
+
+		next.ServeHTTP(lw, r)
 	})
 }

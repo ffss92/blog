@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/fsnotify/fsnotify"
 )
@@ -37,6 +38,14 @@ func (app *application) handleWatch() http.HandlerFunc {
 		}
 
 		rc := http.NewResponseController(w)
+
+		// Clear write deadline
+		err = rc.SetWriteDeadline(time.Time{})
+		if err != nil {
+			app.serverError(w, r, err)
+			return
+		}
+
 		w.Header().Set("Content-Type", "text/event-stream")
 		w.Header().Set("Cache-Control", "no-store")
 		w.Header().Set("Connection", "keep-alive")

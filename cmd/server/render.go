@@ -21,7 +21,7 @@ func (app *application) newBasePage(r *http.Request, title string) basePage {
 	ua := useragent.Parse(r.UserAgent())
 
 	return basePage{
-		Dev:       app.cfg.dev,
+		Dev:       app.isDev(),
 		HTMLTitle: title,
 		IsMac:     ua.IsMacOS() || ua.IsIOS(),
 		UserAgent: useragent.Parse(r.UserAgent()),
@@ -29,7 +29,7 @@ func (app *application) newBasePage(r *http.Request, title string) basePage {
 }
 
 func (app *application) findTemplate(name string) (*template.Template, error) {
-	if app.cfg.dev {
+	if app.isDev() {
 		app.mu.Lock()
 		defer app.mu.Unlock()
 		templates, err := templates.Parse(app.views)

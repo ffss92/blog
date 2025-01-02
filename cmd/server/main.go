@@ -38,6 +38,10 @@ type application struct {
 	templates map[string]*template.Template
 }
 
+func (app *application) isDev() bool {
+	return app.cfg.dev
+}
+
 func main() {
 	if err := run(); err != nil {
 		log.Fatal(err)
@@ -54,6 +58,12 @@ func run() error {
 	flag.StringVar(&cfg.dbPath, "db-path", "blog.db", "Sets the sqlite database path.")
 	flag.Parse()
 
+	var (
+		static   = os.DirFS(cfg.static)
+		articles = os.DirFS(cfg.articles)
+		views    = os.DirFS(cfg.views)
+	)
+
 	logger := logging.NewLogger(slog.LevelInfo, cfg.dev)
 	slog.SetDefault(logger)
 
@@ -63,25 +73,23 @@ func run() error {
 	}
 	defer db.Close()
 
-	blog, err := blog.New(cfg.dev, db, os.DirFS(cfg.articles))
+	blog, err := blog.New(cfg.dev, db, articles)
 	if err != nil {
 		return err
 	}
 
-	templates, err := templates.Parse(os.DirFS(cfg.views))
+	templates, err := templates.Parse(views)
 	if err != nil {
 		return err
 	}
 
 	app := &application{
-		cfg:    cfg,
-		logger: logger,
-		db:     db,
-		blog:   blog,
-		static: os.DirFS(cfg.static),
-		views:  os.DirFS(cfg.views),
-
-		mu:        sync.Mutex{},
+		cfg:       cfg,
+		logger:    logger,
+		db:        db,
+		blog:      blog,
+		static:    static,
+		views:     views,
 		templates: templates,
 	}
 	return app.serve()
