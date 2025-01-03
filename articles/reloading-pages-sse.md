@@ -42,7 +42,7 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Content-Type", "text/event-stream")
   w.Header().Set("Cache-Control", "no-store")
   w.Header().Set("Connection", "keep-alive")
-  flusher.Flush() 
+  flusher.Flush()
 
   ticker := time.NewTicker(time.Second)
   defer ticker.Stop()
@@ -56,7 +56,7 @@ func handleSSE(w http.ResponseWriter, r *http.Request) {
       // Send data to client every tick
       fmt.Fprint(w, "event: tick\n")
       fmt.Fprintf(w, "data: %s\n\n", t)
-      flusher.Flush() 
+      flusher.Flush()
     }
   }
 }
@@ -85,7 +85,7 @@ which is supported by all major browsers.
       const timeEl = document.getElementById("time");
       es.addEventListener("tick", (e) => {
         // Updates the text in div#time every second.
-        timeEl.innerText = e.data; 
+        timeEl.innerText = e.data;
       });
     </script>
   </body>
@@ -115,7 +115,7 @@ Now let's implement a handler that sends events to the client whenever files in 
 func handleWatch(w http.ResponseWriter, r *http.Request) {
   // Dirs that will be watched,
   // adapt this to your project structure
-  targets := []string{"articles", "templates"} 
+  targets := []string{"articles", "templates"}
 
   watcher, err := fsnotify.NewWatcher()
   if err != nil {

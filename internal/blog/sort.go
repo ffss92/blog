@@ -13,5 +13,9 @@ func popularSort(a, b *Article) int {
 }
 
 func dateSort(a, b *Article) int {
-	return -strings.Compare(a.Date, b.Date)
+	res := strings.Compare(a.Date, b.Date)
+	if res == 0 {
+		return strings.Compare(a.Title, b.Title)
+	}
+	return -res
 }
