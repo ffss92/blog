@@ -1,4 +1,11 @@
 {{define "head"}}
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{.Article.Title}}">
+<meta property="og:description" content="{{.Article.Subtitle}}">
+<meta property="og:url" content="https://ffss.dev/articles/{{.Article.Slug}}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{.Article.Title}}">
+<meta name="twitter:description" content="{{.Article.Subtitle}}">
 <script type="module" src="/static/js/article.js"></script>
 {{end}}
 
