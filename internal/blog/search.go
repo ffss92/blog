@@ -44,6 +44,7 @@ func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleResul
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 
 	articles := make([]*ArticleResult, 0)
 	for rows.Next() {
@@ -54,6 +55,10 @@ func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleResul
 		}
 		articles = append(articles, &result)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	
 	return articles, nil
 }
 
