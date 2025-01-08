@@ -22,7 +22,7 @@ func (app *application) handleAuthorShow() http.HandlerFunc {
 			case errors.Is(err, blog.ErrAuthorNotFound):
 				app.notFound(w, r)
 			default:
-				http.Error(w, err.Error(), http.StatusInternalServerError)
+				app.serverError(w, r, err)
 			}
 			return
 		}
