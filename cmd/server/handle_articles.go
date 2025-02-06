@@ -28,7 +28,7 @@ func (app *application) handleArticleIndex() http.HandlerFunc {
 
 		articles, err := app.blog.ListArticles(r.Context(), sort)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			app.serverError(w, r, err)
 			return
 		}
 
@@ -55,7 +55,7 @@ func (app *application) handleArticleShow() http.HandlerFunc {
 			case errors.Is(err, blog.ErrArticleNotFound):
 				app.notFound(w, r)
 			default:
-				http.Error(w, err.Error(), http.StatusInternalServerError)
+				app.serverError(w, r, err)
 			}
 			return
 		}

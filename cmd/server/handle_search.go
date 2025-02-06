@@ -10,7 +10,7 @@ func (app *application) handleSearch() http.HandlerFunc {
 		q := r.URL.Query().Get("q")
 		res, err := app.blog.Search(r.Context(), q)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			app.serverError(w, r, err)
 			return
 		}
 
