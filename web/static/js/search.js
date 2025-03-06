@@ -83,6 +83,7 @@ function closeModal() {
   searchModal.removeEventListener("keydown", handleKeydown);
   searchModal.hidden = true;
   document.body.classList.remove("overflow-hidden");
+  searchToggle.focus(); // Focus on toggle after modal is closed.
 }
 
 searchToggle.addEventListener("click", () => {
