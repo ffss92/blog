@@ -205,6 +205,6 @@ to make sure the page is reloaded after the compilation is done:
 With SSE and `fsnotify`, you can create a lightweight and effective auto-reloading mechanism for development.
 
 Check out the implementation I use for my blog's development
-[here](https://github.com/ffss92/blog/blob/main/cmd/server/handle_watch.go).
+[in this file](https://github.com/ffss92/blog/blob/main/cmd/server/handle_watch.go).
 
 Thanks for reading!
