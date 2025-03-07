@@ -58,7 +58,7 @@ func (s *Service) searchArticles(ctx context.Context, q string) ([]*ArticleResul
 	if err := rows.Err(); err != nil {
 		return nil, err
 	}
-	
+
 	return articles, nil
 }
 
@@ -83,7 +83,7 @@ func (s *Service) indexContents() error {
 		query := `
 		INSERT INTO blog_posts_fts (slug, title, subtitle, content)
 		VALUES ($1, $2, $3, $4)`
-		args := []any{article.Slug, article.Title, article.Subtitle, article.Content}
+		args := []any{article.Slug, article.Title, article.Subtitle, article.RawContent}
 		_, err = tx.Exec(query, args...)
 		if err != nil {
 			return err

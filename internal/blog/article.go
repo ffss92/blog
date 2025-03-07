@@ -24,7 +24,7 @@ type ArticleMetadata struct {
 type Article struct {
 	Slug       string
 	Content    template.HTML
-	RawContent []byte
+	RawContent string
 	PageViews  int
 
 	ArticleMetadata

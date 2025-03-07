@@ -136,7 +136,7 @@ func (s *Service) parseArticles() error {
 		cache[slug] = &Article{
 			Slug:            slug,
 			Content:         template.HTML(buf.String()),
-			RawContent:      contents,
+			RawContent:      string(contents),
 			ArticleMetadata: articleMetadata,
 			PageViews:       views,
 		}
