@@ -19,7 +19,6 @@ searchResults.appendChild(createEmptyResult());
 
 let open = false;
 
-document.body.appendChild(searchModal);
 document.body.addEventListener("keydown", (e) => {
   if (e.key === "k" && (e.ctrlKey || e.metaKey)) {
     e.preventDefault();
