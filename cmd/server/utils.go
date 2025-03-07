@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/fs"
+	"net/http"
 	"path/filepath"
 )
 
@@ -23,4 +24,12 @@ func collectDirs(roots ...string) ([]string, error) {
 		}
 	}
 	return dirs, nil
+}
+
+// Cache files with .ttf extension, 'no-cache' all others.
+func cacheFonts(r *http.Request) string {
+	if filepath.Ext(r.URL.Path) == ".ttf" {
+		return "public, max-age=31536000, immutable"
+	}
+	return "no-cache"
 }

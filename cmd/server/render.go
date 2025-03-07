@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"ffss.dev/cmd/server/templates"
 	"github.com/mileusna/useragent"
 )
 
@@ -33,7 +32,7 @@ func (app *application) render(w http.ResponseWriter, _ *http.Request, templateN
 	buf, err := app.executeTemplate(templateName, data)
 	if err != nil {
 		app.logger.Error(err.Error())
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 	_, _ = buf.WriteTo(w)
@@ -54,14 +53,14 @@ func (app *application) executeTemplate(name string, data any) (*bytes.Buffer, e
 }
 
 func (app *application) findTemplate(name string) (*template.Template, error) {
-	if app.isDev() {
+	if app.isDev() || app.templates == nil {
 		app.mu.Lock()
 		defer app.mu.Unlock()
-		templates, err := templates.Parse(app.views)
+
+		err := app.parseTemplates()
 		if err != nil {
 			return nil, err
 		}
-		app.templates = templates
 	}
 
 	tmpl, ok := app.templates[name]
@@ -73,11 +72,10 @@ func (app *application) findTemplate(name string) (*template.Template, error) {
 
 func (app *application) parseTemplates() error {
 	viewSet := [][]string{
-		{"home"},
 		{"error"},
+		{"authors/show", "authors"},
 		{"articles/index", "articles"},
 		{"articles/show", "articles"},
-		{"authors/show", "authors"},
 	}
 
 	app.templates = make(map[string]*template.Template)

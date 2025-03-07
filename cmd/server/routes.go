@@ -16,7 +16,8 @@ func (app *application) routes() http.Handler {
 
 	r.NotFound(app.notFound)
 
-	r.Mount("/static/", http.StripPrefix("/static/", fileserver.ServeFS(app.static)))
+	static := fileserver.New(app.static, fileserver.WithCacheControlFunc(cacheFonts))
+	r.Mount("/static/", http.StripPrefix("/static/", static))
 
 	r.Group(func(r chi.Router) {
 		r.Get("/", app.handleHome())

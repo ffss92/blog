@@ -11,7 +11,6 @@ import (
 	"os"
 	"sync"
 
-	"ffss.dev/cmd/server/templates"
 	"ffss.dev/internal/blog"
 	"ffss.dev/internal/logging"
 	"ffss.dev/internal/sqlite"
@@ -78,19 +77,13 @@ func run() error {
 		return err
 	}
 
-	templates, err := templates.Parse(views)
-	if err != nil {
-		return err
-	}
-
 	app := &application{
-		cfg:       cfg,
-		logger:    logger,
-		db:        db,
-		blog:      blog,
-		static:    static,
-		views:     views,
-		templates: templates,
+		cfg:    cfg,
+		logger: logger,
+		db:     db,
+		blog:   blog,
+		static: static,
+		views:  views,
 	}
 	return app.serve()
 }
