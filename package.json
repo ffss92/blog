@@ -2,6 +2,7 @@
   "name": "blog",
   "private": true,
   "scripts": {
+    "tw:build": "tailwindcss -i web/input.css -o web/static/css/style.css --minify",
     "tw:watch": "tailwindcss -i web/input.css -o web/static/css/style.css --minify --watch"
   },
   "dependencies": {
