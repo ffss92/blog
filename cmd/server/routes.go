@@ -24,12 +24,16 @@ func (app *application) routes() http.Handler {
 		r.Get("/articles/{slug}", app.handleArticleShow())
 		r.Get("/authors/{handle}", app.handleAuthorShow())
 
-		r.Get("/robots.txt", app.handleRobotsTxt())
-
+		// API
 		r.Route("/api", func(r chi.Router) {
 			r.Get("/search", app.handleSearch())
 		})
 
+		// Static
+		r.Get("/robots.txt", app.handleRobotsTxt())
+		r.Get("/favicon.ico", app.handleFavicon())
+
+		// Dev
 		if app.isDev() {
 			r.Get("/watch", app.handleWatch())
 		}

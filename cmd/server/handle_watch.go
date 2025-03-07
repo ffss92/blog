@@ -9,19 +9,13 @@ import (
 )
 
 func (app *application) handleWatch() http.HandlerFunc {
-	targets := []string{
-		"articles",
-		"web/views",
-		"web/views/home",
-		"web/views/authors",
-		"web/views/authors/show",
-		"web/views/articles",
-		"web/views/articles/index",
-		"web/views/articles/show",
-		"web/static/js",
-	}
-
 	return func(w http.ResponseWriter, r *http.Request) {
+		targets, err := collectDirs("web/views", "web/static")
+		if err != nil {
+			app.serverError(w, r, err)
+			return
+		}
+
 		watcher, err := fsnotify.NewWatcher()
 		if err != nil {
 			app.serverError(w, r, err)
@@ -38,8 +32,6 @@ func (app *application) handleWatch() http.HandlerFunc {
 		}
 
 		rc := http.NewResponseController(w)
-
-		// Clear write deadline
 		err = rc.SetWriteDeadline(time.Time{})
 		if err != nil {
 			app.serverError(w, r, err)
@@ -60,9 +52,9 @@ func (app *application) handleWatch() http.HandlerFunc {
 				return
 			case msg := <-watcher.Events:
 				switch msg.Op {
-				case fsnotify.Write:
+				case fsnotify.Write, fsnotify.Create:
 					fmt.Fprint(w, "event: mod\n")
-					fmt.Fprint(w, "data: reload\n\n")
+					fmt.Fprintf(w, "data: %s\n\n", msg.Name)
 					if err := rc.Flush(); err != nil {
 						app.clientError(w, r, fmt.Errorf("failed to flush: %w", err))
 						return

@@ -14,6 +14,7 @@ type errorPage struct {
 }
 
 func (app *application) renderError(w http.ResponseWriter, r *http.Request, status int, message string) {
+	w.WriteHeader(status)
 	app.render(w, r, "error", errorPage{
 		basePage:   app.newBasePage(r, fmt.Sprint(status)),
 		StatusCode: status,

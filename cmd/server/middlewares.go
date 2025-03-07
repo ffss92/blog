@@ -48,6 +48,10 @@ func (app *application) reqLogger(next http.Handler) http.Handler {
 		lw := &logResponseWriter{ResponseWriter: w, status: http.StatusOK}
 
 		defer func() {
+			if strings.HasPrefix(r.URL.Path, "/static") {
+				return
+			}
+
 			app.logger.Info(
 				"http request",
 				slog.String("method", r.Method),

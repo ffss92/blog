@@ -53,13 +53,14 @@ func New(dev bool, db *sql.DB, articles fs.FS) (*Service, error) {
 		md:       md,
 		articles: articles,
 	}
-	cache, err := service.parseArticles(md, articles)
+
+	err := service.parseArticles()
 	if err != nil {
 		return nil, err
 	}
-	service.cache = cache
 
-	if err := service.indexContents(); err != nil {
+	err = service.indexContents()
+	if err != nil {
 		return nil, err
 	}
 
@@ -81,42 +82,42 @@ func markdownFiles(articles fs.FS) ([]string, error) {
 	return paths, err
 }
 
-func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[string]*Article, error) {
-	paths, err := markdownFiles(articles)
+func (s *Service) parseArticles() error {
+	paths, err := markdownFiles(s.articles)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	cache := make(map[string]*Article)
 	for _, path := range paths {
-		f, err := articles.Open(path)
+		f, err := s.articles.Open(path)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		defer f.Close()
 
 		buf := new(bytes.Buffer)
 		contents, err := io.ReadAll(f)
 		if err != nil {
-			return nil, err
+			return err
 		}
 
 		context := parser.NewContext()
-		err = md.Convert(contents, buf, parser.WithContext(context))
+		err = s.md.Convert(contents, buf, parser.WithContext(context))
 		if err != nil {
-			return nil, err
+			return err
 		}
 
 		metadata := meta.Get(context)
 		b, err := yaml.Marshal(metadata)
 		if err != nil {
-			return nil, err
+			return err
 		}
 
 		var articleMetadata ArticleMetadata
 		err = yaml.Unmarshal(b, &articleMetadata)
 		if err != nil {
-			return nil, err
+			return err
 		}
 
 		slug := strings.TrimSuffix(path, ".md")
@@ -128,7 +129,7 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 			case errors.Is(err, sql.ErrNoRows):
 				views = 0
 			default:
-				return nil, err
+				return err
 			}
 		}
 
@@ -141,7 +142,8 @@ func (s *Service) parseArticles(md goldmark.Markdown, articles fs.FS) (map[strin
 		}
 	}
 
-	return cache, nil
+	s.cache = cache
+	return nil
 }
 
 // If dev mode is on, parses all articles and set them to the cache.
@@ -152,13 +154,15 @@ func (s *Service) refreshArticles() error {
 
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	cache, err := s.parseArticles(s.md, s.articles)
+
+	err := s.parseArticles()
 	if err != nil {
 		return fmt.Errorf("failed to refresh articles from fs: %w", err)
 	}
-	if err := s.indexContents(); err != nil {
+
+	err = s.indexContents()
+	if err != nil {
 		return err
 	}
-	s.cache = cache
 	return nil
 }

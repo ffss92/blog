@@ -25,14 +25,22 @@ type Author struct {
 // Grabs an author by it's handle. If handle is prefixed with and '@', it is trimmed automatically. Returns
 // [ErrAuthorNotFound] if no results are returned.
 func (b *Service) GetAuthor(ctx context.Context, handle string) (*Author, error) {
-	if strings.HasPrefix(handle, "@") {
-		handle = strings.TrimPrefix(handle, "@")
-	}
-
 	ctx, cancel := context.WithTimeout(ctx, 2*time.Second)
 	defer cancel()
 
-	query := `SELECT id, handle, name, bio, birth, image_url, github_url FROM authors WHERE handle = $1`
+	handle = strings.TrimPrefix(handle, "@")
+	query := `
+		SELECT 
+			id, 
+			handle, 
+			name, 
+			bio, 
+			birth, 
+			image_url, 
+			github_url 
+		FROM authors 
+		WHERE handle = $1`
+
 	var author Author
 	err := b.db.QueryRowContext(ctx, query, handle).Scan(
 		&author.ID,

@@ -73,8 +73,8 @@ func MaxChars(value string, n int) bool {
 
 // Checks if value is a valid email.
 func IsEmail(value string) bool {
-	addr, err := mail.ParseAddress(value)
-	return err == nil && addr.Address == value
+    addr, err := mail.ParseAddress(value)
+    return err == nil && addr.Address == value
 }
 
 // Checks if a is equal to b.
@@ -182,27 +182,27 @@ Now that we have our interface defined, and can add some actual `Rule`s to our p
 package rules
 
 func NotBlank() RuleFunc[string] {
-	return func(ctx context.Context, value string) (bool, string) {
-		return validator.NotBlank(value), "Required field"
-	}
+    return func(ctx context.Context, value string) (bool, string) {
+        return validator.NotBlank(value), "Required field"
+    }
 }
 
 func Email() RuleFunc[string] {
-	return func(ctx context.Context, value string) (bool, string) {
-		return validator.IsEmail(value), "Must be a valid email"
-	}
+    return func(ctx context.Context, value string) (bool, string) {
+        return validator.IsEmail(value), "Must be a valid email"
+    }
 }
 
 func MinChars(n int) RuleFunc[string] {
-	return func(ctx context.Context, value string) (bool, string) {
-		return validator.MinChars(value, n), fmt.Sprintf("Must have at least %d characters.", n)
-	}
+    return func(ctx context.Context, value string) (bool, string) {
+        return validator.MinChars(value, n), fmt.Sprintf("Must have at least %d characters.", n)
+    }
 }
 
 func MaxChars(n int) RuleFunc[string] {
-	return func(ctx context.Context, value string) (bool, string) {
-		return validator.MaxChars(value, n), fmt.Sprintf("Must have at most %d characters.", n)
-	}
+    return func(ctx context.Context, value string) (bool, string) {
+        return validator.MaxChars(value, n), fmt.Sprintf("Must have at most %d characters.", n)
+    }
 }
 ```
 
