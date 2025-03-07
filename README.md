@@ -41,6 +41,12 @@ To start compiling tailwind classes, run the command below:
 npm run tw:watch
 ```
 
+Make sure all migrations are applied by running:
+
+```bash
+goose -dir migrations sqlite blog.db up
+```
+
 To start the server in develpment mode, run the Make script below:
 
 ```bash
@@ -59,6 +65,12 @@ After that, compile all tailwind classes with the npm script below:
 
 ```bash
 npm run tw:build
+```
+
+Make sure all migrations are applied by running:
+
+```bash
+goose -dir migrations sqlite blog.db up
 ```
 
 Then, start the server by running the command below. Make sure to specify
