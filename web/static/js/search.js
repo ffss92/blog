@@ -89,6 +89,7 @@ searchToggle.addEventListener("click", () => {
   openModal();
 });
 
+/** @type {number | undefined} */
 let debounceId;
 searchInput.addEventListener("input", async () => {
   clearTimeout(debounceId);
@@ -127,23 +128,23 @@ searchInput.addEventListener("input", async () => {
 });
 
 /**
- * @param {Article} article
+ * @param {import("./api.js").Article}
  */
-function createResultEntry(article) {
+function createResultEntry({ slug, subtitle, title }) {
   const item = document.createElement("li");
   item.className = "p-2";
   const link = document.createElement("a");
   link.className = "flex flex-col p-1 rounded";
-  link.href = `/articles/${article.slug}`;
+  link.href = `/articles/${slug}`;
   item.appendChild(link);
 
   const title = document.createElement("p");
-  title.innerText = article.title;
+  title.innerText = title;
   title.className = "text-sm font-semibold";
   link.appendChild(title);
 
   const subtitle = document.createElement("p");
-  subtitle.innerHTML = article.subtitle;
+  subtitle.innerHTML = subtitle;
   subtitle.className = "text-xs text-stone-700";
   link.appendChild(subtitle);
 
