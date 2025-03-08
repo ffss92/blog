@@ -67,23 +67,8 @@ func New(dev bool, db *sql.DB, articles fs.FS) (*Service, error) {
 	return service, nil
 }
 
-// Collects all markdown files (.md) from a [fs.FS].
-func markdownFiles(articles fs.FS) ([]string, error) {
-	paths := make([]string, 0)
-	err := fs.WalkDir(articles, ".", func(path string, d fs.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if strings.HasSuffix(d.Name(), ".md") {
-			paths = append(paths, path)
-		}
-		return nil
-	})
-	return paths, err
-}
-
 func (s *Service) parseArticles() error {
-	paths, err := markdownFiles(s.articles)
+	paths, err := collectMarkdown(s.articles)
 	if err != nil {
 		return err
 	}

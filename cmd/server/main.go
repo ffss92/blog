@@ -63,7 +63,7 @@ func run() error {
 		views    = os.DirFS(cfg.views)
 	)
 
-	logger := logging.NewLogger(slog.LevelInfo, cfg.dev)
+	logger := logging.NewLogger(cfg.dev)
 	slog.SetDefault(logger)
 
 	db, err := sqlite.Connect(context.Background(), cfg.dbPath)

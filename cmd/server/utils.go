@@ -26,8 +26,9 @@ func collectDirs(roots ...string) ([]string, error) {
 	return dirs, nil
 }
 
-// Cache files with .ttf extension, 'no-cache' all others.
-func cacheFonts(r *http.Request) string {
+// Cache files with .ttf extension, 'no-cache' all others in development mode.
+func cacheControl(r *http.Request) string {
+	// Always cache fonts
 	if filepath.Ext(r.URL.Path) == ".ttf" {
 		return "public, max-age=31536000, immutable"
 	}

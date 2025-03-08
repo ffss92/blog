@@ -16,8 +16,8 @@ func (app *application) routes() http.Handler {
 
 	r.NotFound(app.notFound)
 
-	static := fileserver.New(app.static, fileserver.WithCacheControlFunc(cacheFonts))
-	r.Mount("/static/", http.StripPrefix("/static/", static))
+	filesrv := fileserver.New(app.static, fileserver.WithCacheControlFunc(cacheControl))
+	r.Mount("/static/", http.StripPrefix("/static/", filesrv))
 
 	r.Group(func(r chi.Router) {
 		r.Get("/", app.handleHome())
@@ -25,7 +25,6 @@ func (app *application) routes() http.Handler {
 		r.Get("/articles/{slug}", app.handleArticleShow())
 		r.Get("/authors/{handle}", app.handleAuthorShow())
 
-		// API
 		r.Route("/api", func(r chi.Router) {
 			r.Get("/search", app.handleSearch())
 		})

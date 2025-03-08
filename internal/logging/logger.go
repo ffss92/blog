@@ -7,12 +7,12 @@ import (
 	"github.com/lmittmann/tint"
 )
 
-func NewLogger(level slog.Leveler, dev bool) *slog.Logger {
+func NewLogger(dev bool) *slog.Logger {
 	var h slog.Handler
 	if dev {
-		h = tint.NewHandler(os.Stderr, &tint.Options{Level: level})
+		h = tint.NewHandler(os.Stderr, &tint.Options{Level: slog.LevelDebug})
 	} else {
-		h = slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: level})
+		h = slog.NewJSONHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo})
 	}
 	return slog.New(h)
 }
