@@ -3,9 +3,12 @@
 @plugin '@tailwindcss/typography';
 
 @theme {
-  --font-sans: Open Sans;
-  --font-heading: Raleway;
-  --font-mono: JetBrainsMono;
+  --font-sans: "Open Sans", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: Raleway, ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: JetBrainsMono, ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
 
   --min-height-header: calc(100dvh - 5rem);
 }
