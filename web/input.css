@@ -62,6 +62,7 @@
     font-weight: 300 800;
     src: url("/static/fonts/OpenSans-VariableFont_wdth,wght.ttf")
       format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -70,6 +71,7 @@
     font-weight: 300 800;
     src: url("/static/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf")
       format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -77,6 +79,7 @@
     font-style: normal;
     font-weight: 100 900;
     src: url("/static/fonts/Raleway-VariableFont_wght.ttf") format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -85,6 +88,7 @@
     font-weight: 100 900;
     src: url("/static/fonts/Raleway-Italic-VariableFont_wght.ttf")
       format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -93,6 +97,7 @@
     font-weight: 100 800;
     src: url("/static/fonts/JetBrainsMono-VariableFont_wght.ttf")
       format("truetype");
+    font-display: swap;
   }
 
   @font-face {
@@ -101,5 +106,6 @@
     font-weight: 100 800;
     src: url("/static/fonts/JetBrainsMono-Italic-VariableFont_wght.ttf")
       format("truetype");
+    font-display: swap;
   }
 }
