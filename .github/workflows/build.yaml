@@ -28,7 +28,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/ffss92/blog:latest
+          tags: ghcr.io/${{ github.actor }}/blog:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,5 +53,8 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            docker pull ghcr.io/ffss92/blog:latest
+            docker pull ghcr.io/${{ github.actor }}/blog:latest
+            docker stop blog
+            docker rm blog
+            docker run --name blog -d -p 4000:4000 -v ~/www/blog/blog.db:/blog.db ghcr.io/${{ github.actor }}/blog:latest -dev=false -db-path=./blog.db
           EOF
