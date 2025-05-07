@@ -20,7 +20,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Image
@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghrc.io/${{ github.repository_owner }}/blog:latest
+          tags: ghcr.io/${{ github.repository_owner }}/blog:latest
