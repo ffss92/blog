@@ -28,7 +28,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/blog:latest
+          tags: ghcr.io/ffss92/blog:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -46,5 +46,5 @@ jobs:
       - name: Deploy
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
-            docker pull ghcr.io/${{ github.repository_owner }}/blog:latest
+            docker pull ghcr.io/ffss92/blog:latest
           EOF
