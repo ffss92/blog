@@ -48,12 +48,15 @@ func (app *application) reqLogger(next http.Handler) http.Handler {
 		lw := &logResponseWriter{ResponseWriter: w, status: http.StatusOK}
 
 		defer func() {
-			level := slog.LevelInfo
+			duration := time.Since(t)
 
+			app.metrics.IncHTTPRequest(r.Method, r.URL.Path, lw.status)
+			app.metrics.RequestDuration(r.Method, r.URL.Path, duration)
+
+			level := slog.LevelInfo
 			if strings.HasPrefix(r.URL.Path, "/static") {
 				level = slog.LevelDebug
 			}
-
 			app.logger.Log(
 				r.Context(),
 				level,
@@ -63,7 +66,7 @@ func (app *application) reqLogger(next http.Handler) http.Handler {
 				slog.Int("status", lw.status),
 				slog.String("proto", r.Proto),
 				slog.String("ip_address", r.RemoteAddr),
-				slog.Duration("duration", time.Since(t)),
+				slog.Duration("duration", duration),
 			)
 		}()
 

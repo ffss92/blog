@@ -13,25 +13,28 @@ import (
 
 	"ffss.dev/internal/blog"
 	"ffss.dev/internal/logging"
+	"ffss.dev/internal/metrics"
 	"ffss.dev/internal/sqlite"
 )
 
 type config struct {
-	addr     string
-	dev      bool
-	articles string
-	static   string
-	views    string
-	dbPath   string
+	addr        string
+	metricsAddr string
+	dev         bool
+	articles    string
+	static      string
+	views       string
+	dbPath      string
 }
 
 type application struct {
-	cfg    config
-	logger *slog.Logger
-	db     *sql.DB
-	blog   *blog.Service
-	views  fs.FS
-	static fs.FS
+	cfg     config
+	logger  *slog.Logger
+	db      *sql.DB
+	blog    *blog.Service
+	metrics *metrics.Collector
+	views   fs.FS
+	static  fs.FS
 
 	mu        sync.Mutex
 	templates map[string]*template.Template
@@ -50,6 +53,7 @@ func main() {
 func run() error {
 	var cfg config
 	flag.StringVar(&cfg.addr, "addr", ":4000", "Sets the HTTP server listen address.")
+	flag.StringVar(&cfg.metricsAddr, "metrics-addr", ":8080", "Sets the metrics HTTP listen address.")
 	flag.BoolVar(&cfg.dev, "dev", true, "Sets the application in development mode.")
 	flag.StringVar(&cfg.articles, "articles", "articles", "Sets the articles dir.")
 	flag.StringVar(&cfg.static, "static", "web/static", "Sets the static dir.")
@@ -77,13 +81,17 @@ func run() error {
 		return err
 	}
 
+	col := metrics.NewCollector(logger)
+	go col.ServeMetrics(cfg.metricsAddr)
+
 	app := &application{
-		cfg:    cfg,
-		logger: logger,
-		db:     db,
-		blog:   blog,
-		static: static,
-		views:  views,
+		cfg:     cfg,
+		logger:  logger,
+		db:      db,
+		blog:    blog,
+		metrics: col,
+		static:  static,
+		views:   views,
 	}
 	return app.serve()
 }
