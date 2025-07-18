@@ -1,26 +1,27 @@
 {{define "search-toggle"}}
-<button 
+  <button
     id="search-toggle"
-    class="p-2 md:px-3 md:py-1.5 border border-stone-300 text-stone-700 rounded-md flex items-center justify-center gap-2 shadow-xs hover:shadow-sm text-sm focus-visible:border-blue-400"
+    class="flex items-center justify-center gap-2 rounded-md border border-stone-300 p-2 text-sm text-stone-700 shadow-xs hover:shadow-sm focus-visible:border-blue-400 md:px-3 md:py-1.5"
     {{if .IsMac}}
-        aria-keyshortcuts="Cmd+K"
+      aria-keyshortcuts="Cmd+K"
     {{else}}
-        aria-keyshortcuts="Ctrl+K"
+      aria-keyshortcuts="Ctrl+K"
     {{end}}
     aria-label="Search Content"
->
+  >
     <div class="size-5">{{template "search-icon"}}</div>
-    <div class="hidden md:flex items-center space-x-2">
-        <span>
-            Search content
-        </span>
-        <code class="text-xs py-1 px-2 bg-stone-200 rounded-md flex items-center justify-center">
-            {{if .IsMac}}
-                <div class="size-3">{{template "command-icon"}}</div> <span>+k</span>
-            {{else}}
-                ctrl+k
-            {{end}}
-        </code>
+    <div class="hidden items-center space-x-2 md:flex">
+      <span> Search content </span>
+      <code
+        class="flex items-center justify-center rounded-md bg-stone-200 px-2 py-1 text-xs"
+      >
+        {{if .IsMac}}
+          <div class="size-3">{{template "command-icon"}}</div>
+          <span>+k</span>
+        {{else}}
+          ctrl+k
+        {{end}}
+      </code>
     </div>
-</button>
+  </button>
 {{end}}

@@ -1,16 +1,26 @@
 {{define "authors-content"}}
-<section class="flex flex-col gap-4">
+  <section class="flex flex-col gap-4">
     {{with .Author.ImageURL}}
-    <img class="size-20 rounded-full" src="{{.}}" alt="{{$.Author.Name}}'s picture">
+      <img
+        class="size-20 rounded-full"
+        src="{{.}}"
+        alt="{{$.Author.Name}}'s picture"
+      />
     {{end}}
 
+
     <div>
-        <h1 class="text-3xl font-bold">{{.Author.Name}}</h1>
-        <p>{{.Author.Bio}}</p>
+      <h1 class="text-3xl font-bold">{{.Author.Name}}</h1>
+      <p>{{.Author.Bio}}</p>
     </div>
 
     <div class="flex gap-2 text-sm">
-        <a target="_blank" class="underline text-blue-600" href="{{.Author.GithubURL}}">GitHub</a>
+      <a
+        target="_blank"
+        class="text-blue-600 underline"
+        href="{{.Author.GithubURL}}"
+        >GitHub</a
+      >
     </div>
-</section>
+  </section>
 {{end}}

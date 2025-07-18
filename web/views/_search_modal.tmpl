@@ -1,35 +1,41 @@
 {{define "search-modal"}}
-<div 
-    hidden
-    id="search-modal" 
-    role="dialog" 
-    tabindex="-1"
-    aria-modal="true"
->
+  <div hidden id="search-modal" role="dialog" tabindex="-1" aria-modal="true">
     <div class="fixed inset-0 bg-black/40 p-4">
-        <div id="search-content" class="max-w-md mx-auto w-full my-20 space-y-2">
-            <div class="relative">
-                <input
-                    aria-label="Search content"
-                    id="search-input"
-                    type="text"
-                    placeholder="Search content" 
-                    class="bg-stone-50 py-2.5 pl-10 pr-2 w-full rounded-md shadow-md border border-transparent focus-visible:border-blue-400 text-sm"
-                >
-                <div aria-hidden="true" id="search-loading-icon" hidden class="absolute left-2 top-1/2 -translate-y-1/2">
-                    <div class="size-5 text-stone-700 animate-spin">
-                        {{template "loader-icon"}}
-                    </div>
-                </div>
-                <div aria-hidden="true" id="search-idle-icon" class="absolute left-2 top-1/2 -translate-y-1/2">
-                    <div class="size-5 text-stone-700">
-                        {{template "search-icon"}}
-                    </div>
-                </div>
+      <div id="search-content" class="mx-auto my-20 w-full max-w-md space-y-2">
+        <div class="relative">
+          <input
+            aria-label="Search content"
+            id="search-input"
+            type="text"
+            placeholder="Search content"
+            class="w-full rounded-md border border-transparent bg-stone-50 py-2.5 pr-2 pl-10 text-sm shadow-md focus-visible:border-blue-400"
+          />
+          <div
+            aria-hidden="true"
+            id="search-loading-icon"
+            hidden
+            class="absolute top-1/2 left-2 -translate-y-1/2"
+          >
+            <div class="size-5 animate-spin text-stone-700">
+              {{template "loader-icon"}}
             </div>
-
-            <div id="search-results" class="p-2 bg-stone-50 rounded-md shadow-md"></div>
+          </div>
+          <div
+            aria-hidden="true"
+            id="search-idle-icon"
+            class="absolute top-1/2 left-2 -translate-y-1/2"
+          >
+            <div class="size-5 text-stone-700">
+              {{template "search-icon"}}
+            </div>
+          </div>
         </div>
+
+        <div
+          id="search-results"
+          class="rounded-md bg-stone-50 p-2 shadow-md"
+        ></div>
+      </div>
     </div>
-</div>
+  </div>
 {{end}}

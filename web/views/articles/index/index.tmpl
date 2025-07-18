@@ -1,40 +1,48 @@
 {{define "articles-content"}}
-<section class="space-y-4">
+  <section class="space-y-4">
     <div class="space-y-2">
-        <h1 class="text-4xl font-bold">Articles</h1>
-        <ul class="flex items-center gap-2">
-            <li>
-                <a {{if eq .Sort "date"}}data-current{{end}} class="sort" href="?sort=date">
-                    Date
-                </a>
-            </li>
-            <li>
-                <a {{if eq .Sort "popular"}}data-current{{end}} class="sort" href="?sort=popular">
-                    Popular
-                </a>
-            </li>
-        </ul>
+      <h1 class="text-4xl font-bold">Articles</h1>
+      <ul class="flex items-center gap-2">
+        <li>
+          <a
+            {{if eq .Sort "date"}}data-current{{end}}
+            class="sort"
+            href="?sort=date"
+          >
+            Date
+          </a>
+        </li>
+        <li>
+          <a
+            {{if eq .Sort "popular"}}data-current{{end}}
+            class="sort"
+            href="?sort=popular"
+          >
+            Popular
+          </a>
+        </li>
+      </ul>
     </div>
 
     <ul class="max-w-lg space-y-2">
-        {{range .Articles}}
+      {{range .Articles}}
         <li>
-            <a 
-                class="text-lg space-y-2 flex flex-col focus-visible:outline-hidden focus-visible:ring-3 focus-visible:ring-blue-300 p-2 rounded-sm" 
-                href="/articles/{{.Slug}}"
-            >
-                <div class="space-y-1">
-                    <h2 class="font-semibold">{{.Title}}</h2>
-                    <p class="text-sm">
-                        {{.Date}}
-                    </p>
-                </div>
-                <p class="text-sm text-stone-700">
-                    {{.Subtitle}}
-                </p>
-            </a>
+          <a
+            class="flex flex-col space-y-2 rounded-sm p-2 text-lg focus-visible:ring-3 focus-visible:ring-blue-300 focus-visible:outline-hidden"
+            href="/articles/{{.Slug}}"
+          >
+            <div class="space-y-1">
+              <h2 class="font-semibold">{{.Title}}</h2>
+              <p class="text-sm">
+                {{.Date}}
+              </p>
+            </div>
+            <p class="text-sm text-stone-700">
+              {{.Subtitle}}
+            </p>
+          </a>
         </li>
-        {{end}}
+      {{end}}
     </ul>
-</section>
+  </section>
 {{end}}

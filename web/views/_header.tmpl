@@ -1,12 +1,12 @@
 {{define "header"}}
-<header class="p-4 flex items-center justify-between max-w-6xl mx-auto h-20">
+  <header class="mx-auto flex h-20 max-w-6xl items-center justify-between p-4">
     <div class="flex items-center gap-4">
-        <a class="text-xl font-bold" href="/">ffss.dev</a>
+      <a class="text-xl font-bold" href="/">ffss.dev</a>
     </div>
 
-    <div class="flex gap-4 items-center">
-        {{template "search-toggle" .}}
-        <a class="text-sm" href="/articles">Articles</a>
+    <div class="flex items-center gap-4">
+      {{template "search-toggle" .}}
+      <a class="text-sm" href="/articles">Articles</a>
     </div>
-</header>
+  </header>
 {{end}}

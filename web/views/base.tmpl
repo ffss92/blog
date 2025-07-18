@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content='{{block "description" .}}Some golang ideas I have.{{end}}'>
-    <link rel="icon" href="/static/images/favicon.ico">
-    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script defer data-domain="ffss.dev" src="https://analytics.ffss.dev/js/script.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="{{block `description` .}}Some golang ideas I have.{{end}}"
+    />
+    <link rel="icon" href="/static/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="/static/images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script
+      defer
+      data-domain="ffss.dev"
+      src="https://analytics.ffss.dev/js/script.js"
+    ></script>
     <script type="module" src="/static/js/app.js"></script>
-    <title>{{with .HTMLTitle}}{{.}} - {{end}}ffss.dev</title>
+    <title>{{with.HTMLTitle}}{{.}} -{{" "}}{{end}}ffss.dev</title>
     {{block "head" .}}{{end}}
-</head>
-<body>
+  </head>
+  <body>
     {{template "header" .}}
     {{template "content" .}}
     {{block "post-content" .}}{{end}}
     {{template "search-modal" .}}
-    
+
     {{if .Dev}}
       <script>
         const es = new EventSource("/watch");
@@ -28,9 +35,14 @@
           }
           id = setTimeout(() => {
             location.reload();
-          }, 500)
+          }, 500);
+        });
+        window.addEventListener("beforeunload", () => {
+          if (es.readyState !== EventSource.CLOSED) {
+            es.close();
+          }
         });
       </script>
     {{end}}
-</body>
+  </body>
 </html>

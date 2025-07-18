@@ -1,43 +1,54 @@
 {{define "head"}}
-<meta property="og:type" content="article">
-<meta property="og:title" content="{{.Article.Title}}">
-<meta property="og:description" content="{{.Article.Subtitle}}">
-<meta property="og:url" content="https://ffss.dev/articles/{{.Article.Slug}}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{.Article.Title}}">
-<meta name="twitter:description" content="{{.Article.Subtitle}}">
-<script type="module" src="/static/js/article.js"></script>
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="{{.Article.Title}}" />
+  <meta property="og:description" content="{{.Article.Subtitle}}" />
+  <meta
+    property="og:url"
+    content="https://ffss.dev/articles/{{.Article.Slug}}"
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{.Article.Title}}" />
+  <meta name="twitter:description" content="{{.Article.Subtitle}}" />
+  <script type="module" src="/static/js/article.js"></script>
 {{end}}
 
 {{define "description"}}{{.Article.Subtitle}}{{end}}
 
 {{define "articles-content"}}
-<section class="lg:flex gap-8">
-    <article class="max-w-2xl space-y-4 mx-auto">
-        <h1 class="text-3xl md:text-5xl font-bold font-heading">
-            {{.Article.Title}}
-        </h1>
-    
-        <a href="/authors/{{.Author.Handle}}" class="text-sm flex items-center gap-2 w-fit">
-            <img class="size-10 rounded-full" src="{{.Author.ImageURL}}" alt="{{.Author.Name}}'s picture"> 
-            <div>
-                <div class="font-bold">{{.Author.Name}}</div>
-                <div class="flex items-center gap-2">
-                    <span class="size-4">{{template "calendar-icon"}}</span> {{.Article.Date}}
-                </div>
-            </div>
-        </a>
-    
-        <div class="article">
-            <p>{{.Article.Subtitle}}</p>
-            {{.Article.Content}}
+  <section class="gap-8 lg:flex">
+    <article class="mx-auto max-w-2xl space-y-4">
+      <h1 class="font-heading text-3xl font-bold md:text-5xl">
+        {{.Article.Title}}
+      </h1>
+
+      <a
+        href="/authors/{{.Author.Handle}}"
+        class="flex w-fit items-center gap-2 text-sm"
+      >
+        <img
+          class="size-10 rounded-full"
+          src="{{.Author.ImageURL}}"
+          alt="{{.Author.Name}}'s picture"
+        />
+        <div>
+          <div class="font-bold">{{.Author.Name}}</div>
+          <div class="flex items-center gap-2">
+            <span class="size-4">{{template "calendar-icon"}}</span>
+            {{.Article.Date}}
+          </div>
         </div>
+      </a>
+
+      <div class="article">
+        <p>{{.Article.Subtitle}}</p>
+        {{.Article.Content}}
+      </div>
     </article>
 
-    <aside class="hidden lg:block flex-1 shrink-0 w-full relative">
-        <div class="sticky top-4">
-            <div id="toc"></div>
-        </div>
+    <aside class="relative hidden w-full flex-1 shrink-0 lg:block">
+      <div class="sticky top-4">
+        <div id="toc"></div>
+      </div>
     </aside>
-</section>
+  </section>
 {{end}}
