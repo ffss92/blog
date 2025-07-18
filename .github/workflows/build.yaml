@@ -56,5 +56,5 @@ jobs:
             docker pull ghcr.io/${{ github.actor }}/blog:latest
             docker stop blog
             docker rm blog
-            docker run --name blog -d -p 4000:4000 -v ~/www/blog/blog.db:/blog.db ghcr.io/${{ github.actor }}/blog:latest -dev=false -db-path=./blog.db
+            docker run --name blog -d -p 4000:4000 --network frontend_network -v ~/www/blog/blog.db:/blog.db ghcr.io/${{ github.actor }}/blog:latest -dev=false -db-path=./blog.db
           EOF
